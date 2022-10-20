@@ -1,10 +1,10 @@
 
 
-interface EmuMenuProps {
+interface EmuFlowMenuProps {
 
 }
 
-export default function EmuMenu(props: EmuMenuProps) {
+export default function EmuMenu(props: EmuFlowMenuProps) {
     return (
         <div>
             <div>
