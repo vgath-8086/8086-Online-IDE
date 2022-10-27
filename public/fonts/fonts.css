@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+@font-face {
+    font-family: "Modenine";
+    src: url("./Modenine-2OPd.ttf");
+}
+
+@font-face {
+    font-family: "Modeseven";
+    src: url("./Modeseven-L3n5.ttf");
+}
+
+@font-face {
+    font-family: "SvBasicManual";
+    src: url("./SvBasicManual-nRPP.ttf");
+}
+
+@font-face {
+    font-family: "SvBasicManual-Bold";
+    src: url("./SvBasicManualBold-1G3g.ttf");
+}
+
+@font-face {
+    font-family: "Tifax";
+    src: url("./Tifax-AJ7g.ttf");
+}
