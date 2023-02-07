@@ -6,6 +6,8 @@ import React from 'react'
 
 import dynamic from "next/dynamic";
 
+import SavePopUp from "components/SavePopUp";
+
 const NoSSRComponent = dynamic(() => import("../components/TerminalInterface"), {
   ssr: false,
   type: "module"
@@ -21,7 +23,8 @@ export default function Home() {
     <React.StrictMode>
       <Provider store={store}>
         <div>
-          <TestsPage />
+          {/*<TestsPage />*/}
+          <SavePopUp />
         </div>
       </Provider>
     </React.StrictMode>

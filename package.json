@@ -19,7 +19,8 @@
     "react-konva": "^18.2.3",
     "react-redux": "^8.0.4",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "sass": "^1.58.0"
   },
   "devDependencies": {
     "@types/node": "18.11.3",
