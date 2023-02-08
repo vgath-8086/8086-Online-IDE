@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import styles from "styles/popUp.module.scss"
+import styles from "styles/SaveAndLoad/popUp.module.scss"
 
 interface SavePopUpInterface {
 

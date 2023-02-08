@@ -90,65 +90,36 @@ $warning-color: #FFBA00;
     justify-content: flex-start;
 
     flex: 5;
+
+    overflow-y: auto;
+    scrollbar-color: rebeccapurple green;
+    scrollbar-width: thin;
+    padding-right: 1px;
     
     .item {
         width: 100%;
         display: flex;
         justify-content: space-between;
         margin-top: 19px;
-
-        .itemFileName {
-            display: flex;
-            align-items: center;
-            height: $elementsHeight;
-            width: 125px;
-            box-shadow: $centred-shadow;
-            border-radius: 3px;
-            font-size: 14px;
-            text-align: center;
-            padding-left: 10px;
-            position: relative;
-
-            .itemFileNameLeftBar {
-                position: absolute;
-                left: 0;
-                background-color: $active-color;
-                width: 3px;
-                height: 100%;
-                border-radius: 3px 0 0 3px;
-            }
-        }
-
-        .itemFileDownload {
-            border-radius: 3px;
-            border: none;
-            box-shadow: $centred-shadow;
-            background-color: white;
-            width: $elementsHeight;
-            height: $elementsHeight;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .itemFileDelete {
-            border-radius: 3px;
-            border: none;
-            box-shadow: $centred-shadow;
-            background-color: $warning-color;
-            width: $elementsHeight;
-            height: $elementsHeight;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-        }
-
-        .icons {
-
-        }
     }
 }
+
+.list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+.list::-webkit-scrollbar-thumb {
+    background: #888;
+}
+  
+.list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 
 //Footer====================================================================
 //--------------------------------------------------------------------------

@@ -1,7 +1,7 @@
-import React, { FC, ReactNode, useState } from "react"
-import styles from "styles/popUp.module.scss"
+import React, { ReactNode } from "react"
+import styles from "styles/SaveAndLoad/popUp.module.scss"
 
-//The FC attributes have to be warped in the <></> tag
+//The ReactNode attributes have to be warped in the <></> tag
 
 interface FilePopUpLayoutInterface {
     headerTitle: string,
@@ -23,6 +23,7 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
                         </div>
                     </div>                    
                 </div>
+                
                 <div className={styles.list}>
                     {props.listItems.map((itemContent)=>(
                         <div className={styles.item}>
@@ -30,7 +31,6 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
                         </div>
                     ))}
                 </div>
-
 
                 <div className={styles.footer}>
                     {props.footer}
