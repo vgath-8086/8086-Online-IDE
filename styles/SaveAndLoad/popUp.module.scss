@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 $standard-shadow: 0 4px 4px 0 #00000040;
 $centred-shadow: 0 0px 4px 0 #00000040;
@@ -7,9 +9,6 @@ $elementsHeight: 32px;
 $dark-color: #1E1F2B;
 $active-color: #6F7DFF;
 $warning-color: #FFBA00;
-
-@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 .container {
     margin: 40px 40px; //test à supprimer

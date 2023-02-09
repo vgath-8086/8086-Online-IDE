@@ -24,3 +24,8 @@
     font-family: "Tifax";
     src: url("./Tifax-AJ7g.ttf");
 }
+
+@font-face {
+    font-family: "HermeneusOne";
+    src: url("./HermeneusOne-Regular.ttf");
+}

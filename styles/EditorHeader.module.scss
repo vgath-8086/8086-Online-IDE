@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+$dark-color: #1E1F2B;
+$active-color: #6F7DFF;
+$warning-color: #FFBA00;
+
+$header-shadow: 0 4px 12px 0 #D9D5ED;
+
+.header {
+    display: flex;
+    height: 64px;
+}
+
+//Logo =================================================================
+//----------------------------------------------------------------------
+
+.logoContainer{
+    display: flex;
+
+    .logoContent {
+        display: flex;
+        align-items: center;
+        padding-left: 44px;
+        padding-right: 5px;
+        width: 35ch; //420px
+        background-color: $dark-color;
+        box-shadow: $header-shadow;
+        z-index: 6;
+    
+        .logoIcon {
+            width: 41px;
+            height: 41px;
+        }
+    
+        .logoTitle {
+            font-family: HermeneusOne;
+            font-size: 21px;
+            padding-left: 5px;
+            color: white;
+        }
+    }
+
+    //A quick fix to prevent the box-shadows from overlapping 
+    .emptyUtilDiv { 
+        background-color: $dark-color;
+        width: 50px;
+        z-index: 7;
+    }
+
+    .vagunette{
+        height: 100%;
+        z-index: 5;
+        filter: drop-shadow(0px 4px 12px #D9D5ED);
+    }
+}
+
+//Navigation and compilation =================================================================
+//----------------------------------------------------------------------
+.nav{
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .navButton {
+        background-color: white;
+        border: none;
+        cursor: pointer;
+    
+        display: flex;
+        align-items: center;
+    
+        .navIcon {
+            width: 24px;
+            height: 24px;
+        }
+    
+        .navButtonName {
+            font-size: 15px;
+            font-family: Inter;
+            padding-left: 8px;
+        }
+    }
+
+    .navExampleButton {
+
+        background-color: white;
+        border: none;
+        cursor: pointer;
+    
+        display: flex;
+        align-items: center;
+
+        .navIcon {
+            width: 20px;
+            height: 10px;
+        }
+        .navExampleButtonName {
+            font-size: 17px;
+            font-family: Inter;
+            padding-left: 8px;
+            color: $active-color;
+            font-weight: bold;
+        }
+    }
+
+    .compileButton {
+        box-shadow: 0 0 10px 4px #2FD4AE20;
+        background-color: $active-color;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 0 12px;
+        height: 46px;
+    
+        display: flex;
+        align-items: center;
+
+        .navIcon {
+            width: 32px;
+            height: 32px;
+        }
+        .compileButtonName {
+            font-size: 17px;
+            font-family: Inter;
+            padding-left: 8px;
+            color: white;
+            font-weight: bold;
+        }
+    }
+}
+
+
+

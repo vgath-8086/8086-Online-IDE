@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react"
-import styles from "styles/SaveAndLoad/popUp.module.scss"
+import styles from "styles/SaveAndLoad/PopUp.module.scss"
 
 //The ReactNode attributes have to be warped in the <></> tag
 
@@ -25,8 +25,8 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
                 </div>
                 
                 <div className={styles.list}>
-                    {props.listItems.map((itemContent)=>(
-                        <div className={styles.item}>
+                    {props.listItems.map((itemContent, idx)=>( /*change Idx to fileID*/
+                        <div className={styles.item} key={idx}>
                             {itemContent}
                         </div>
                     ))}

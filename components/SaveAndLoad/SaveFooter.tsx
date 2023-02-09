@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "styles/SaveAndLoad/popUp.module.scss"
+import styles from "styles/SaveAndLoad/PopUp.module.scss"
 
 interface SaveFooterInterface {
     onSave: Function
