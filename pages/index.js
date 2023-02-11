@@ -8,7 +8,8 @@ import dynamic from "next/dynamic";
 
 import SavePopUp from "components/SaveAndLoad/SavePopUp";
 import LoadPopUp from "components/SaveAndLoad/LoadPopUp";
-import EditorHeader from "components/EditorInterface/EditorHeader";
+import EditorHeader from "components/EditorInterface/EditorHeader/EditorHeader";
+import EditorTabBar from "components/EditorInterface/EditorArea/EditorTabBar";
 
 const NoSSRComponent = dynamic(() => import("../components/TerminalInterface"), {
   ssr: false,
@@ -25,6 +26,7 @@ export default function Home() {
     <React.StrictMode>
       <Provider store={store}>
         <EditorHeader />
+        <EditorTabBar />
         <div>
           {/*<TestsPage />*/}
           <SavePopUp />
