@@ -10,9 +10,9 @@ interface EditorTabBarInterface {
 export default function EditorTabBar(props: EditorTabBarInterface) {
 
     const tabs = [
-        <EditorTabItem active={false}/>,
-        <EditorTabItem active={true}/>,
-        <EditorTabItem active={false}/>,
+        <EditorTabItem key={1} active={false}/>,
+        <EditorTabItem key={2} active={true}/>,
+        <EditorTabItem key={3} active={false}/>,
 
     ];
 
