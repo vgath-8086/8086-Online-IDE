@@ -1,6 +1,6 @@
 import React from "react"
 
-import styles from "styles/EditorHeader.module.scss"
+import styles from "styles/EditorInterface/EditorHeader.module.scss"
 
 interface LogoBarInterface {
 

@@ -99,7 +99,7 @@ function mkZ80(ez80) {
   };
 };
 
-  function nfasm86() {
+function nfasm86() {
     const builtinS = /^(jc|lea|add|adc|inc|sub|sbb|dec|neg|cmp|mul|imul|div|idiv|cbw|cwd|not|mov|push|pop|xchg|pushf|popf|SHL|SAL|SHR|SAR|ROL|ROR|RCL|RCR|AND|OR|TEST|XOR|REP|REPE|REPNE|((MOVS|CMPS|SCAS|LODS|STOS)(b|w))|CALL|JMP|RET|JE|JZ|JL|JNGE|JLE|JNG|JB|JNAE|JBE|JNA|JP|JPE|JO|JS|JNE|JNZ|JNL|JGE|JNLE|JG|JNB|JAE|JNBE|JA|JNP|JPO|JNO|JNS|LOOP|LOOPZ|LOOPE|LOOPNZ|LOOPNE|INT|CLC|CMC|STC|CLD|STD)\b/i;
     const builtin = /^(REP|REPE|REPNE|(MOVS|CMPS|SCAS|LODS|STOS)(b|w))\b/i;
     const RW = /^(ax|bx|cx|dx|si|di|bp|sp)\b/i;
@@ -193,10 +193,12 @@ function mkZ80(ez80) {
         commentTokens: {line: ";"}
       }
     };
-  };
+};
   
   //export const asm86 = mkZ80(false)
-  export const asm86 = nfasm86()
+const StreamParserAsm86 = nfasm86()
+//export const asm86 = nfasm86()
+export default StreamParserAsm86;
 
 /*
 mov ax, 45h

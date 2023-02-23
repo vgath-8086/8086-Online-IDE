@@ -1,7 +1,7 @@
 import React from "react"
 import cn from 'classnames'
 
-import styles from 'styles/EditorTabBar.module.scss'
+import styles from 'styles/EditorInterface/EditorTabBar.module.scss'
 
 interface EditorTabItemInterface {
     active: boolean

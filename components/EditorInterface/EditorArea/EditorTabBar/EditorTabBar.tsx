@@ -1,7 +1,7 @@
 import React from "react"
 import EditorTabItem from "./EditorTabItem"
 
-import styles from 'styles/EditorTabBar.module.scss'
+import styles from 'styles/EditorInterface/EditorTabBar.module.scss'
 
 interface EditorTabBarInterface {
 

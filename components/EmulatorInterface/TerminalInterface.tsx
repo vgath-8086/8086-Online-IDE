@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Stage, Layer, Text, Rect, Circle, Line } from 'react-konva';
 
-import { TerminalCharacter, TERMINAL_COLORS } from "../definitions/Terminal";
+import { TerminalCharacter, TERMINAL_COLORS } from "definitions/Terminal";
 
 
 const BackgroundLayer = (props: {width: number, height:number}) => {

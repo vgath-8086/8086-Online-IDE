@@ -1,6 +1,6 @@
 import React from "react"
 
-import styles from "styles/EditorFooter.module.scss"
+import styles from "styles/EditorInterface/EditorFooter.module.scss"
 
 interface EditorFooterInterface {
 
