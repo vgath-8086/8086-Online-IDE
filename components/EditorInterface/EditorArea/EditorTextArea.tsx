@@ -17,7 +17,7 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
     console.log('value:', value);
   }, []);
   return (
-    <div style={{flex: 1}}>
+    <div style={{flex: 1, maxHeight: "100%"}}>
       <CodeMirror
         value={'\r\norg 0h \r\n \r\nret\r\n'}
         height={"100%"}

@@ -11,6 +11,7 @@ import LoadPopUp from "components/SaveAndLoad/LoadPopUp";
 import EditorHeader from "components/EditorInterface/EditorHeader/EditorHeader";
 import EditorTabBar from "components/EditorInterface/EditorArea/EditorTabBar/EditorTabBar";
 import EditorTextArea from "components/EditorInterface/EditorArea/EditorTextArea";
+import EditorFooter from "components/EditorInterface/EditorFooter/EditorFooter";
 
 const NoSSRComponent = dynamic(() => import("../components/TerminalInterface"), {
   ssr: false,
@@ -33,6 +34,7 @@ export default function Home() {
             {/*<SavePopUp />*/}
             {/*<LoadPopUp />*/}
           <EditorTextArea />
+          <EditorFooter />
         </div>
 
       </Provider>
