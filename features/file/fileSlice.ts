@@ -13,7 +13,7 @@ interface FilesState {
 const initialState:FilesState = {
     files: [test__DefaultFile],
     openedFiles: ['0'],
-    activeFile: null,
+    activeFile: '0',
 }
 
 //=======================================================================================================
@@ -30,7 +30,7 @@ export const fileSlice = createSlice({
             
             let createdFile:SourceFile = {
                 id: fileUuid,
-                name: 'untitled',   //TODO: change the default naming: untitled-0, untitled-1
+                name: 'untitled' + fileUuid[0] + fileUuid[1],   //TODO: change the default naming: untitled-0, untitled-1
                 content: defaultContent,
                 creationDate: currentDate,
                 lastSave: currentDate,
@@ -49,10 +49,18 @@ export const fileSlice = createSlice({
             state.files.push(action.payload);
             state.openedFiles.push(index);
         },
+        */
+
+        //Switch to a new file when clicking on a TabBarElement
+        switchFile: (state, action: PayloadAction<string>) => {
+            const index: string = action.payload;
+
+            state.activeFile = index
+        },
 
         //When an untitled empty file is closed, it shall be deleted 
-        closeFile: (state, action: PayloadAction<number>) => {
-            const   index: number = action.payload,
+        closeFile: (state, action: PayloadAction<string>) => {
+            const   index: string = action.payload,
 
                     untitledRegex: RegExp = /^untitled[0-9]*$/,
                     emptyRegex: RegExp = /^(\n|\s|\t| )*$/; 
@@ -62,19 +70,38 @@ export const fileSlice = createSlice({
             
             state.openedFiles.splice( openedIndex, 1);
 
+            //If the file is active, then we pass the active state to a new file
+            if (state.activeFile == index) {
+
+                //If there are no more openedFile
+                if (state.openedFiles.length == 0) {
+
+                    state.activeFile = null;
+                }
+
+                //If the closed file is not the left most child of the TabBar, we take its left sister component
+                if (openedIndex != 0) {
+
+                    state.activeFile = state.openedFiles[openedIndex-1]
+                }
+                else {
+
+                    state.activeFile = state.openedFiles[openedIndex+1]
+                }
+            }
+
             //If the file is an untitled empty file, it shall be deleted
-            const   title = state.files[index].name,
-                    content = state.files[index].content;
-                  
-            if (title.match(untitledRegex) && content.match(emptyRegex)) {
-                state.files.splice(index, 1);
+            const emptyFile:SourceFile = state.files.filter((file) => file.id == index)[0];
+
+            if (emptyFile.name.match(untitledRegex) && emptyFile.content.match(emptyRegex)) {
+
+                state.files = state.files.filter((file) => file.id != index);
             }
         }
-        */
 
     }
 })
 
-export const { createFile /*,openFile, closeFile*/ } = fileSlice.actions
+export const { createFile /*,openFile*/, switchFile, closeFile } = fileSlice.actions
 export type { FilesState }
 export default fileSlice.reducer

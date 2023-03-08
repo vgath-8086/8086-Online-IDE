@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { SourceFile } from "definitions/File"
 import EditorTabItem from "./EditorTabItem"
-import { createFile, FilesState } from "features/file/fileSlice"
+import { createFile } from "features/file/fileSlice"
 
 import styles from 'styles/EditorInterface/EditorTabBar.module.scss'
 
@@ -20,9 +20,9 @@ export default function EditorTabBar(props: EditorTabBarInterface) {
     const dispatch = useDispatch();
     
     const tabs = [
-        <EditorTabItem key={1} title={"loop_exo.asm"} active={false}/>,
-        <EditorTabItem key={2} title={"loop_exo.asm"} active={true}/>,
-        <EditorTabItem key={3} title={"loop_exo.asm"} active={false}/>,
+        <EditorTabItem key={1} id={"0"} title={"loop_exo.asm"} active={false}/>,
+        <EditorTabItem key={2} id={"0"} title={"loop_exo.asm"} active={true}/>,
+        <EditorTabItem key={3} id={"0"} title={"loop_exo.asm"} active={false}/>,
     ];
 
     const generateTabs:Function = (files:SourceFile[], openedFiles:string[], activeFile:string): ReactNode[] => {
@@ -35,7 +35,7 @@ export default function EditorTabBar(props: EditorTabBarInterface) {
                 const isActive:boolean = activeFile == file.id;
 
                 tabsList.push(
-                    <EditorTabItem key={file.id} title={file.name} active={isActive}/>
+                    <EditorTabItem key={file.id} id={file.id} title={file.name} active={isActive}/>
                 )
             }
         }
@@ -47,9 +47,7 @@ export default function EditorTabBar(props: EditorTabBarInterface) {
         <div className={styles.tabBarContainer}>
             <div className={styles.tabBarContent}>
                 <div className={styles.emptyLeftSpace}>&nbsp;</div>
-                {/*tabs.map((item) =>
-                    item
-                )*/generateTabs(files, openedFiles, activeFile)}
+                {generateTabs(files, openedFiles, activeFile)}
             </div>
 
             <button 
