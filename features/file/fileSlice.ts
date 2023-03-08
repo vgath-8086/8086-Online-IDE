@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from 'uuid';
 
-import type { SourceFile } from '../../definitions/File';
+import  { defaultContent, test__DefaultFile } from 'definitions/File';
+import type { SourceFile } from 'definitions/File';
 
-interface FileState {
+interface FilesState {
     files: SourceFile[],
-    openedFiles: number[],
-    activeFile: number|null,
+    openedFiles: string[],
+    activeFile: string|null,
 }
 
-const initialState:FileState = {
-    files: [],
-    openedFiles: [],
+const initialState:FilesState = {
+    files: [test__DefaultFile],
+    openedFiles: ['0'],
     activeFile: null,
 }
 
@@ -20,6 +22,26 @@ export const fileSlice = createSlice({
     name: 'file',
     initialState,
     reducers: {
+
+        //Create a new file when clicking on the "plus" button
+        createFile: (state) => {
+            const currentDate:string = new Date().toDateString(),
+                  fileUuid:string = uuidv4();
+            
+            let createdFile:SourceFile = {
+                id: fileUuid,
+                name: 'untitled',   //TODO: change the default naming: untitled-0, untitled-1
+                content: defaultContent,
+                creationDate: currentDate,
+                lastSave: currentDate,
+            };
+
+            state.files.push(createdFile);
+            state.openedFiles.push(fileUuid);
+            state.activeFile = fileUuid;
+        },
+
+        /*
         //As soon as a file is opened, it shall be saved onto the state/localStorage
         openFile: (state, action: PayloadAction<SourceFile>) => {
             const index: number = state.files.length + 1;
@@ -48,10 +70,11 @@ export const fileSlice = createSlice({
                 state.files.splice(index, 1);
             }
         }
+        */
 
     }
 })
 
-export const { openFile, closeFile } = fileSlice.actions
-
+export const { createFile /*,openFile, closeFile*/ } = fileSlice.actions
+export type { FilesState }
 export default fileSlice.reducer

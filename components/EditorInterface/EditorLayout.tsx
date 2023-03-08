@@ -1,12 +1,12 @@
 import React from "react"
 
-import EditorTabBar from "./EditorArea/EditorTabBar/EditorTabBar"
+import EditorTabBar from "./EditorTabBar/EditorTabBar"
 import EditorTextArea from "./EditorArea/EditorTextArea"
 import EditorFooter from "./EditorFooter/EditorFooter"
 import EditorHeader from "./EditorHeader/EditorHeader"
 
 interface EditorLayoutInterface {
-    
+
 }
 
 export default function EditorLayout(props: EditorLayoutInterface) {
