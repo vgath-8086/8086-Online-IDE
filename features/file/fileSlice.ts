@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from 'uuid';
 
-import  { defaultContent, test__DefaultFile } from 'definitions/File';
+import  { defaultContent, FileManagement, test__DefaultFile } from 'definitions/File';
 import type { SourceFile } from 'definitions/File';
 
 interface FilesState {
@@ -25,12 +25,13 @@ export const fileSlice = createSlice({
 
         //Create a new file when clicking on the "plus" button
         createFile: (state) => {
-            const currentDate:string = new Date().toDateString(),
+            const fileName:string = FileManagement.generateUntitledName(state.files),
+                  currentDate:string = new Date().toDateString(),
                   fileUuid:string = uuidv4();
             
             let createdFile:SourceFile = {
                 id: fileUuid,
-                name: 'untitled' + fileUuid[0] + fileUuid[1],   //TODO: change the default naming: untitled-0, untitled-1
+                name: fileName,   //TODO: change the default naming: untitled-0, untitled-1
                 content: defaultContent,
                 creationDate: currentDate,
                 lastSave: currentDate,
@@ -58,12 +59,31 @@ export const fileSlice = createSlice({
             state.activeFile = index
         },
 
+        //Update file content as we write in it
+        updateFileContent: (state, action: PayloadAction<string>) => {
+            const newContent:string = action.payload;
+
+            if (state.activeFile) {
+
+                state.files.find(file => file.id == state.activeFile).content = newContent; // Check this line
+            }
+            //If there is no active file, we create a new untitled file
+            else {
+                const fileName:string = FileManagement.generateUntitledName(state.files),
+                      createdFile:SourceFile = FileManagement.newSourceFile(fileName, newContent);
+
+                state.files.push(createdFile);
+                state.openedFiles.push(createdFile.id);
+                state.activeFile = createdFile.id;
+            }
+        },
+
         //When an untitled empty file is closed, it shall be deleted 
         closeFile: (state, action: PayloadAction<string>) => {
             const   index: string = action.payload,
 
-                    untitledRegex: RegExp = /^untitled[0-9]*$/,
-                    emptyRegex: RegExp = /^(\n|\s|\t| )*$/; 
+                    untitledRegex: RegExp = FileManagement.untitledRegex,
+                    emptyRegex: RegExp = FileManagement.emptyRegex; 
 
             //We remove the file from the openedFiles list
             const openedIndex: number = state.openedFiles.indexOf(index);
@@ -78,15 +98,15 @@ export const fileSlice = createSlice({
 
                     state.activeFile = null;
                 }
+                
+                //If the closed file is not the right most child of the TabBar, we take its right sister component
+                if (openedIndex != state.openedFiles.length) {
 
-                //If the closed file is not the left most child of the TabBar, we take its left sister component
-                if (openedIndex != 0) {
-
-                    state.activeFile = state.openedFiles[openedIndex-1]
+                    state.activeFile = state.openedFiles[openedIndex]
                 }
                 else {
 
-                    state.activeFile = state.openedFiles[openedIndex+1]
+                    state.activeFile = state.openedFiles[openedIndex-1]
                 }
             }
 
@@ -102,6 +122,6 @@ export const fileSlice = createSlice({
     }
 })
 
-export const { createFile /*,openFile*/, switchFile, closeFile } = fileSlice.actions
+export const { createFile /*,openFile*/, switchFile, updateFileContent, closeFile } = fileSlice.actions
 export type { FilesState }
 export default fileSlice.reducer
