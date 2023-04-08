@@ -37,13 +37,15 @@ class SyntaxAnalysis {
                 }
             }
         }
-         index--;
+        index--;
         return { message: temp.message, good: temp.good, index: arr[index].index };
     }
 
     excute(Obj) {
         
-        if(Obj.expressionType== "VAR" || Obj.instructionType == "prePropIns") return { message: null, good: true }
+        if(Obj.expressionType== "VAR" || Obj.instructionType == "prePropIns") 
+        
+            return { message: null, good: true }
        
         switch (Obj.instName) {
 
@@ -52,7 +54,6 @@ class SyntaxAnalysis {
                 //mov can acsept more than 2 paremeter but they have no  effect 
 
                 if (Obj.operands.length > 1) {
-
 
                     let type1 = Obj.operands[0].type;
 
@@ -72,16 +73,12 @@ class SyntaxAnalysis {
 
                         const element = opsCompinision[index];
 
-
-
                         if (element.includes(comp)) {
 
                             exist = true;
 
                             break;
-
                         }
-
                     }
 
                     //detect wich operands is the memory for deplacement size cheak
@@ -93,14 +90,9 @@ class SyntaxAnalysis {
                         return { message: "DEPLACEMENT OVERFLLOW", good: false };
 
 
-
                     if (!exist) {
 
-
-
                         if (type2 == 'INT') {
-
-
 
                             if (!this.range(Obj.operands[1].name))
 
@@ -108,12 +100,9 @@ class SyntaxAnalysis {
 
                             //after the test above we are sure that the int can fit in 2 byte at most
 
-
-
                             //to know if the int fit in one or two byte we use synth_getS
 
                             let s = synth_getS(Obj.operands[1].name, 1);
-
 
                             if (/RL|MB|VAR8|VARU/.test(type1)) {
 
@@ -128,12 +117,9 @@ class SyntaxAnalysis {
                                 else
 
                                     return { message: "Unmatched Operands Size", good: false }
-
                             }
 
                             if (/RX|MW|VAR16|VARU/.test(type1))
-
-
 
                                 return { message: null, good: true }
                                 
@@ -143,7 +129,6 @@ class SyntaxAnalysis {
                                 and the second is an INT, We are in an ambiguous case
                             */
                             if (/MU/.test(type1))
-
 
                                 return { message: "Ambiguous paremeters, please precise the memory size (byte/word)", good: false }
                             
@@ -228,11 +213,7 @@ class SyntaxAnalysis {
                             //this means that the operand is false
 
                             return { message: "Illegal Paremeters", good: false }
-
-
-
                     }
-
                 }
 
                 else return { message: "Illegal Number of Paremeters", good: false }
