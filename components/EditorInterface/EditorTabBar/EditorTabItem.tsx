@@ -29,6 +29,8 @@ export default function EditorTabItem(props: EditorTabItemInterface) {
                     dispatch(closeFile(props.id))
                 }}
             />
+
+            
         </div>
     );
 }
