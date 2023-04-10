@@ -3,6 +3,8 @@ import EditorCloseUnsavedFile from "./EditorCloseUnsavedFile"
 import EditorCompilationModal from "./EditorCompilationModal"
 import EditorSaveFileAs from "./EditorSaveFileAs"
 
+// TODO: Create a standard layout component for all the modals (header, content, footer)
+
 interface EditorLayoutInterface {
 
 }

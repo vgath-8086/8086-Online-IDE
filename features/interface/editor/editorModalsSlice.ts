@@ -2,13 +2,18 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 interface EditorModalState {
-    isUnsavedFileModalOpen: boolean,
+    isUnsavedFileModalOpen: boolean;
     isSaveAsModalOpen: boolean;
+    isErrorModalOpen: boolean;
+
+    errorMessage: string;   //TODO: create a standart error popup
 }
 
 const initialState:EditorModalState = {
     isUnsavedFileModalOpen: false,
     isSaveAsModalOpen: false,
+    isErrorModalOpen: false,
+    errorMessage: '',
 }
 
 //=======================================================================================================

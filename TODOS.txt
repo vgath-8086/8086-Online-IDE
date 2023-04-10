@@ -1,0 +1,3 @@
+
+Create a general a "general error" popup
+Create a standard layout component for all the modals (header, content, footer)

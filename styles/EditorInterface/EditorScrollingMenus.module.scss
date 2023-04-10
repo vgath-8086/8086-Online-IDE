@@ -1,0 +1,78 @@
+$centred-shadow: 0 0px 4px 0 #00000040;
+
+$dark-color: #1E1F2B;
+$active-color: #6F7DFF;
+$neuter-color: #ACACACC0;
+$warning-color: #FFBA00;
+
+$separator-color: #D9D5ED40;
+
+//File Menu
+//=====================================
+.FileMenuContainer {
+    position: absolute;
+    margin-top: 20px;
+    z-index: 99999;
+
+    background-color: white;
+
+    box-shadow: $centred-shadow;
+    border-radius: 4px;
+
+    display: flex;
+
+    .mainList, .actionList {
+        width: 176px;
+
+        .separator {
+            margin: 0;
+            border-color: $separator-color;
+        }
+
+        .listElement {
+            padding: 13px;
+            border-radius: 2px;
+
+            display: flex;
+            justify-content: space-between;
+
+            .button {
+                font-size: 14px;
+                text-align: left;
+        
+                border: none;
+                cursor: pointer;
+
+                background-color: inherit;
+                color: inherit;
+            }
+
+            .moreIcon {
+                background-color: inherit;
+                stroke: white;   
+            }
+        }
+
+        .listElement:hover {
+            //background-color: $active-color;
+            color: $active-color;
+            cursor: pointer;
+        }
+
+    }
+
+    .actionList {
+        display: none;
+    }
+
+    .actionButton {
+        font-style: italic;
+    }
+
+
+    .actionButton:hover + .moreIcon + .actionList {
+        display: block;
+    }
+}
+
+

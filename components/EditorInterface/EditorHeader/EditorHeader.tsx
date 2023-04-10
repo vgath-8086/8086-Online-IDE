@@ -2,6 +2,7 @@ import React from "react"
 import LogoBar from "./LogoBar"
 
 import styles from "styles/EditorInterface/EditorHeader.module.scss"
+import FileScrollingMenu from "./FileScrollingMenu"
 
 interface EditorHeaderInterface {
 
@@ -14,10 +15,14 @@ export default function EditorHeader(props: EditorHeaderInterface) {
             <LogoBar />
 
             <div className={styles.nav}>
-                <button className={styles.navButton}>
-                    <img className={styles.navIcon} src="icons/header/icon_file_management.svg" alt="icon file management" />
-                    <span className={styles.navButtonName}>Files</span>
-                </button>
+                <div>
+                    <button className={styles.navButton}>
+                        <img className={styles.navIcon} src="icons/header/icon_file_management.svg" alt="icon file management" />
+                        <span className={styles.navButtonName}>Files</span>
+                    </button>
+                    <FileScrollingMenu />
+                </div>
+
 
                 <button className={styles.navButton}>
                     <img className={styles.navIcon} src="icons/header/icon_manual.svg" alt="icon manual" />
