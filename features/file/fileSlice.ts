@@ -1,8 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from 'uuid';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { v4 as uuidv4 } from 'uuid'
 
-import  { defaultContent, FileManagement, test__DefaultFile } from 'definitions/File';
-import type { SourceFile } from 'definitions/File';
+import  { defaultContent, FileManager, test__DefaultFile } from 'definitions/File'
+import type { SourceFile } from 'definitions/File'
+
+import editorModalsSlice from 'features/interface/editor/editorModalsSlice'
 
 interface FilesState {
     files: SourceFile[],
@@ -25,7 +27,7 @@ export const fileSlice = createSlice({
 
         //Create a new file when clicking on the "plus" button
         createFile: (state) => {
-            const fileName:string = FileManagement.generateUntitledName(state.files),
+            const fileName:string = FileManager.generateUntitledName(state.files),
                   currentDate:string = new Date().toDateString(),
                   fileUuid:string = uuidv4();
             
@@ -69,8 +71,8 @@ export const fileSlice = createSlice({
             }
             //If there is no active file, we create a new untitled file
             else {
-                const fileName:string = FileManagement.generateUntitledName(state.files),
-                      createdFile:SourceFile = FileManagement.newSourceFile(fileName, newContent);
+                const fileName:string = FileManager.generateUntitledName(state.files),
+                      createdFile:SourceFile = FileManager.newSourceFile(fileName, newContent);
 
                 state.files.push(createdFile);
                 state.openedFiles.push(createdFile.id);
@@ -82,12 +84,13 @@ export const fileSlice = createSlice({
         closeFile: (state, action: PayloadAction<string>) => {
             const   index: string = action.payload,
 
-                    untitledRegex: RegExp = FileManagement.untitledRegex,
-                    emptyRegex: RegExp = FileManagement.emptyRegex; 
+                    untitledRegex: RegExp = FileManager.untitledRegex,
+                    emptyRegex: RegExp = FileManager.emptyRegex; 
 
             //We remove the file from the openedFiles list
             const openedIndex: number = state.openedFiles.indexOf(index);
             
+            //Closing the file
             state.openedFiles.splice( openedIndex, 1);
 
             //If the file is active, then we pass the active state to a new file
@@ -111,9 +114,9 @@ export const fileSlice = createSlice({
             }
 
             //If the file is an untitled empty file, it shall be deleted
-            const emptyFile:SourceFile = state.files.filter((file) => file.id == index)[0];
+            const currentFile:SourceFile = state.files.filter((file) => file.id == index)[0];
 
-            if (emptyFile.name.match(untitledRegex) && emptyFile.content.match(emptyRegex)) {
+            if (FileManager.isUntitled(currentFile) && FileManager.isEmpty(currentFile)) {
 
                 state.files = state.files.filter((file) => file.id != index);
             }

@@ -20,11 +20,18 @@ const test__DefaultFile:SourceFile = {
     lastSave: '',
 };
 
-class FileManagement {
+class FileManager {
 
     static defaultUntitled:string = 'untitled';
     static untitledRegex:RegExp = untitledRegex;
     static emptyRegex:RegExp = emptyRegex;
+
+    static findFile(fileList:SourceFile[], id: string):SourceFile {
+
+        const file: SourceFile = fileList.filter((file) => file.id == id)[0];
+
+        return file;
+    }
 
     static newSourceFile(name:string, content:string, id?:string): SourceFile {
 
@@ -41,20 +48,30 @@ class FileManagement {
         };
     }
 
+    static isEmpty(file: SourceFile): boolean {
+
+        return !!file.content.match(emptyRegex)
+    }
+
+    static isUntitled(file: SourceFile): boolean {
+
+        return !!file.name.match(untitledRegex)
+    }
+
     //Note: it would be better if we had some sort of counter in a class to register every untitled file 
     static generateUntitledName(fileList:SourceFile[]): string {
 
         //We first look for all the untitled files
         const untitledFiles:SourceFile[] = fileList.filter(
 
-            file => FileManagement.untitledRegex.test(file.name)    
+            file => FileManager.untitledRegex.test(file.name)    
         )
         const cardinalsList:number[] = []
         
         //We look for all the used cardinals
         for (const file of untitledFiles) {
 
-            if (file.name == FileManagement.defaultUntitled) {
+            if (file.name == FileManager.defaultUntitled) {
 
                 cardinalsList.push(0)
             }
@@ -93,4 +110,4 @@ class FileManagement {
 }
 
 export type { SourceFile };
-export { defaultContent, test__DefaultFile, FileManagement };
+export { defaultContent, test__DefaultFile, FileManager };

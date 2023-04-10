@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 interface EditorModalState {
-    isFileModalClose: boolean,
+    isUnsavedFileModalOpen: boolean,
+    isSaveAsModalOpen: boolean;
 }
 
 const initialState:EditorModalState = {
-    isFileModalClose: true,
+    isUnsavedFileModalOpen: false,
+    isSaveAsModalOpen: false,
 }
 
 //=======================================================================================================
@@ -16,20 +18,32 @@ export const editorModalSlice = createSlice({
     initialState,
     reducers: {
 
-        //Main Modal
-        openCloseFileModal: (state) => {
+        //Unsaved File Modal
+        openUnsavedFileModal: (state) => {
             
-            state.isFileModalClose = true;
+            state.isUnsavedFileModalOpen = true;
         },
         
-        closeCloseFileModal: (state, action: PayloadAction<any>) => {
+        closeUnsavedFileModal: (state, action: PayloadAction<any>) => {
             
-            state.isFileModalClose = false;
+            state.isUnsavedFileModalOpen = false;
+        },
+
+        //Save As File Modal
+        openSaveAsModal: (state) => {
+    
+            state.isSaveAsModalOpen = true;
+        },
+        
+        closeSaveAsModal: (state) => {
+            
+            state.isSaveAsModalOpen = false;
         }
 
     }
 })
 
-export const { openCloseFileModal, closeCloseFileModal  } = editorModalSlice.actions
+export const { openUnsavedFileModal, closeUnsavedFileModal, openSaveAsModal, closeSaveAsModal } = editorModalSlice.actions
 export type { EditorModalState }
 export default editorModalSlice.reducer
+
