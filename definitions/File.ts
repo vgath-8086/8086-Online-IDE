@@ -26,11 +26,18 @@ class FileManager {
     static untitledRegex:RegExp = untitledRegex;
     static emptyRegex:RegExp = emptyRegex;
 
-    static findFile(fileList:SourceFile[], id: string):SourceFile {
+    static findFile(fileList:SourceFile[], id: string): SourceFile {
 
         const file: SourceFile = fileList.filter((file) => file.id == id)[0];
 
         return file;
+    }
+
+    static findFilePosition(fileList:SourceFile[], id: string): number {
+
+        const filePosition: number = fileList.findIndex((file) => file.id == id);
+
+        return filePosition;
     }
 
     static newSourceFile(name:string, content:string, id?:string): SourceFile {

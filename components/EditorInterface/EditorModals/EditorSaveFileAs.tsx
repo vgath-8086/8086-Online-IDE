@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import Modal from 'react-modal'
 import { useSelector, useDispatch } from "react-redux"
 import cn from 'classnames'
 
+import { closeFile, updateFileName } from "features/file/fileSlice"
 import { closeSaveAsModal } from 'features/interface/editor/editorModalsSlice'
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
@@ -12,9 +13,13 @@ interface EditorSaveFileAsInterface {
 }
 
 export default function EditorSaveFileAsFile(props: EditorSaveFileAsInterface) {
-    const dispatch = useDispatch();
 
     const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveAsModalOpen);
+    const fileToSave = useSelector((state:any) => state.fileSystem.fileToSave);
+
+    const [newFileName, setNewFileName] = useState<string>('');
+
+    const dispatch = useDispatch();
 
     const handleClose = () => {
 
@@ -22,8 +27,16 @@ export default function EditorSaveFileAsFile(props: EditorSaveFileAsInterface) {
     }
 
     const handleSave = () => {
-        
-        dispatch;
+        if (newFileName.length > 0) {
+            dispatch(updateFileName({
+                newName: newFileName,
+                index: fileToSave
+            }));   
+
+            dispatch(closeFile(fileToSave));
+            dispatch(closeSaveAsModal());
+
+        }
     }
     
     return (
@@ -47,18 +60,27 @@ export default function EditorSaveFileAsFile(props: EditorSaveFileAsInterface) {
                 </h2>
 
                 <div className={styles.saveFileContent}>
-                    <input className={styles.saveFileInput} type="text" placeholder="Enter File Name..." />
+                    <input 
+                        onChange={(e)=>setNewFileName(e.currentTarget.value)}
+                        className={styles.saveFileInput} 
+                        type="text" 
+                        placeholder="Enter File Name..." 
+                    />
                 </div>
 
                 <hr className={styles.separatorLine}/>
 
                 <div className={styles.unsavedFileFooter}>
-                    <button className={cn([styles.button, styles.saveButton])}>
+                    <button 
+                        onClick={()=>handleSave()}
+                        className={cn([styles.button, styles.saveButton])}
+                    >
                         Save
                     </button>
                     <button 
                         onClick={()=>handleClose()}
-                        className={cn([styles.button, styles.closeButton])}>
+                        className={cn([styles.button, styles.closeButton])}
+                    >
                         Cancel
                     </button>
 

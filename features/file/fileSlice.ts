@@ -10,12 +10,14 @@ interface FilesState {
     files: SourceFile[],
     openedFiles: string[],
     activeFile: string|null,
+    fileToSave: string,
 }
 
 const initialState:FilesState = {
     files: [test__DefaultFile],
     openedFiles: ['0'],
     activeFile: '0',
+    fileToSave: '',
 }
 
 //=======================================================================================================
@@ -42,6 +44,9 @@ export const fileSlice = createSlice({
             state.files.push(createdFile);
             state.openedFiles.push(fileUuid);
             state.activeFile = fileUuid;
+
+            console.log(state.files);
+            
         },
 
         /*
@@ -62,7 +67,7 @@ export const fileSlice = createSlice({
         },
 
         //Update file content as we write in it
-        updateFileContent: (state, action: PayloadAction<string>) => {
+        updateActiveFileContent: (state, action: PayloadAction<string>) => {
             const newContent:string = action.payload;
 
             if (state.activeFile) {
@@ -78,6 +83,18 @@ export const fileSlice = createSlice({
                 state.openedFiles.push(createdFile.id);
                 state.activeFile = createdFile.id;
             }
+        },
+
+        //TO DO: We should verify here if the name is not already taken
+        updateFileName: (state, action: PayloadAction<{newName:string, index:string}>) => {
+            let {index, newName} = action.payload;
+
+            //Quick fix if the user provided an empty string
+            if (newName.length == 0) {
+                newName = `up-${state.files.find(file => file.id == index).name}`;
+            }
+            
+            state.files.find(file => file.id == index).name = newName; 
         },
 
         //When an untitled empty file is closed, it shall be deleted 
@@ -120,11 +137,62 @@ export const fileSlice = createSlice({
 
                 state.files = state.files.filter((file) => file.id != index);
             }
-        }
+        },
 
+        //VERY TMP, should review urgently
+        //Delete file from filelist and opened file
+        deleteFile: (state, action: PayloadAction<string>) => {
+            const index: string = action.payload;
+
+            const deletePosition: number = FileManager.findFilePosition(state.files, index);
+            console.log(deletePosition, index);
+            
+            state.files.splice( deletePosition, 1);
+
+            const openedIndex: number = state.openedFiles.indexOf(index);
+
+            //If the file is not opened, we terminate here
+            if (!openedIndex) {
+                return;
+            }
+            
+            //Closing the file
+            state.openedFiles.splice( openedIndex, 1);
+
+            //If the file is active, then we pass the active state to a new file
+            if (state.activeFile == index) {
+
+                //If there are no more openedFile
+                if (state.openedFiles.length == 0) {
+            
+                    state.activeFile = null;
+                }
+                
+                //If the closed file is not the right most child of the TabBar, we take its right sister component
+                if (openedIndex != state.openedFiles.length) {
+            
+                    state.activeFile = state.openedFiles[openedIndex]
+                }
+                else {
+            
+                    state.activeFile = state.openedFiles[openedIndex-1]
+                }
+            }
+        },
+
+        setFileToSave: (state, action: PayloadAction<string>) => {
+
+            state.fileToSave = action.payload
+        },
+
+        clearFileToSave: (state) => {
+
+            state.fileToSave = ''
+        },
     }
 })
 
-export const { createFile /*,openFile*/, switchFile, updateFileContent, closeFile } = fileSlice.actions
+export const { createFile /*,openFile*/, switchFile, updateActiveFileContent, updateFileName,
+                closeFile, deleteFile, setFileToSave, clearFileToSave } = fileSlice.actions
 export type { FilesState }
 export default fileSlice.reducer

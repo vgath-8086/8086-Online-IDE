@@ -3,7 +3,8 @@ import Modal from 'react-modal'
 import { useSelector, useDispatch } from "react-redux"
 import cn from 'classnames'
 
-import { closeUnsavedFileModal } from 'features/interface/editor/editorModalsSlice'
+import { closeUnsavedFileModal, openSaveAsModal } from 'features/interface/editor/editorModalsSlice'
+import { deleteFile } from 'features/file/fileSlice'
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
 
@@ -14,7 +15,8 @@ interface EditorCloseUnsavedFileInterface {
 export default function EditorCloseUnsavedFile(props: EditorCloseUnsavedFileInterface) {
     const dispatch = useDispatch();
 
-    const modalIsOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isFileModalOpen);
+    const modalIsOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isUnsavedFileModalOpen);
+    const fileToSave:string = useSelector((state:any) => state.fileSystem.fileToSave);
 
     const handleClose = () => {
 
@@ -23,12 +25,14 @@ export default function EditorCloseUnsavedFile(props: EditorCloseUnsavedFileInte
 
     const handleSave = () => {
         
-        dispatch;
+        dispatch(closeUnsavedFileModal(''))
+        dispatch(openSaveAsModal())
     }
 
     const handleDontSave = () => {
         
-        dispatch;
+        dispatch(closeUnsavedFileModal(''))
+        dispatch(deleteFile(fileToSave))
     }
     
     return (
@@ -63,15 +67,22 @@ export default function EditorCloseUnsavedFile(props: EditorCloseUnsavedFileInte
                 <hr className={styles.separatorLine}/>
 
                 <div className={styles.unsavedFileFooter}>
-                    <button className={cn([styles.button, styles.dontSaveButton])}>
+                    <button 
+                        onClick={()=>handleDontSave()}
+                        className={cn([styles.button, styles.dontSaveButton])}
+                    >
                         Don't save
                     </button>
-                    <button className={cn([styles.button, styles.saveButton])}>
+                    <button 
+                        onClick={()=>handleSave()}
+                        className={cn([styles.button, styles.saveButton])}
+                    >
                         Save
                     </button>
                     <button 
                         onClick={()=>handleClose()}
-                        className={cn([styles.button, styles.closeButton])}>
+                        className={cn([styles.button, styles.closeButton])}
+                    >
                         Cancel
                     </button>
 

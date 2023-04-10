@@ -8,7 +8,7 @@ import okaidia from '@uiw/codemirror-theme-okaidia';
 import StreamParserAsm86 from 'definitions/CodeMirror/StreamParserAsm86'
 import ThemeLightBase16 from 'definitions/CodeMirror/ThemeLightBase16'
 import { SourceFile } from 'definitions/File';
-import { updateFileContent } from "features/file/fileSlice"
+import { updateActiveFileContent } from "features/file/fileSlice"
 
 interface EditorTextAreaInterface {
 
@@ -31,7 +31,7 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
   const defaultText = '\r\norg 0h\r\n\r\nret\r\n';
 
   const onChange = React.useCallback((value, viewUpdate) => {
-    dispatch(updateFileContent(value))
+    dispatch(updateActiveFileContent(value))
   }, []);
 
   return (
