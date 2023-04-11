@@ -61,18 +61,13 @@ $separator-color: #D9D5ED40;
 
     }
 
-    .actionList {
+    $c: "& .actionButton:hover";
+
+    .actionListHidden {
         display: none;
     }
 
-    .actionButton {
-        font-style: italic;
-    }
 
-
-    .actionButton:hover + .moreIcon + .actionList {
-        display: block;
-    }
 }
 
 

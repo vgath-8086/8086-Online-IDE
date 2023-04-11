@@ -1,3 +1,14 @@
 
-Create a general a "general error" popup
-Create a standard layout component for all the modals (header, content, footer)
+FIXES:
+->When creating a new file by writing in an empty editor, then closing this file without saving it
+    write again in the empty editor generates an error
+
+FUNCT:
+->Create a standard layout component for all the modals (header, content, footer)
+->Create a general a "general error" popup
+    -> Extend this popup type to an confirmation popup
+    -> Create a standard confirmation popup which will take action as parameter
+    -> Add a confirmation before deleting a file
+    -> Add a general notice popup
+->Reorganise the modal slice so that we would only have a unique open/close function which recieves a modal ID as a parameter.
+->Implement closeAllModals for when clicking on a modal overlay

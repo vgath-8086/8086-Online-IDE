@@ -44,7 +44,7 @@ export default function EditorCloseUnsavedFile(props: EditorCloseUnsavedFileInte
                 //onRequestClose={closeModal}
                 //style={customStyles}
                 contentLabel="Example Modal"
-                className={styles.content}
+                className={`${styles.content} ${styles.standardModalContainer}`}
                 //overlayClassName={styles.overlay}
             >
                 {/*<h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>

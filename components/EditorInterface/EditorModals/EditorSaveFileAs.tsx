@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import Modal from 'react-modal'
 import { useSelector, useDispatch } from "react-redux"
+import Modal from 'react-modal'
 import cn from 'classnames'
 
 import { closeFile, updateFileName } from "features/file/fileSlice"
@@ -44,16 +44,10 @@ export default function EditorSaveFileAsFile(props: EditorSaveFileAsInterface) {
             <Modal
                 isOpen={isModalOpen}
                 ariaHideApp={false}
-                //onAfterOpen={afterOpenModal}
-                //onRequestClose={closeModal}
-                //style={customStyles}
                 contentLabel="Example Modal"
-                className={styles.content}
-                //overlayClassName={styles.overlay}
+                className={`${styles.content} ${styles.standardModalContainer}`}
             >
-                {/*<h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-                <button onClick={closeModal}>close</button>*/}
-
+                
                 <h2 className={styles.saveTitleContainer}>
                     <img className={styles.saveTitleIcon} src="icons/icon_save_file.svg" alt="save" />
                     <span className={styles.saveTitleSpan}>Save Untitled File</span>
@@ -66,6 +60,10 @@ export default function EditorSaveFileAsFile(props: EditorSaveFileAsInterface) {
                         type="text" 
                         placeholder="Enter File Name..." 
                     />
+
+                    <div className={styles.saveFileExtension}>
+                        .asm
+                    </div>
                 </div>
 
                 <hr className={styles.separatorLine}/>

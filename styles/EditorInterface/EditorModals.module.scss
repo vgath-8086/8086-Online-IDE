@@ -10,6 +10,17 @@ $warning-color: #FFBA00;
 $elementsHeight: 32px; //hmmm
 
 
+//=================================
+// Standard Modals
+//=================================
+
+.standardModalContainer {
+    padding: 18px;
+    width: 404px;
+}
+
+//Header====================================================================
+//--------------------------------------------------------------------------
 .cautionTitleContainer {
     background-color: $warning-color;
     display: flex;
@@ -81,8 +92,8 @@ $elementsHeight: 32px; //hmmm
     opacity: 0.8;
 }
 
-/* Unsaved File Modal*/
-//=================================
+// Body for: Unsaved File Modal=============================================
+//--------------------------------------------------------------------------
 .unsavedFileContent {
     flex: 1;
     margin: 10px 0;
@@ -101,6 +112,56 @@ $elementsHeight: 32px; //hmmm
         font-style: italic;
     }
 }
+
+// Body for: SaveAs File Modal=============================================
+//--------------------------------------------------------------------------
+.saveFileContent {
+    width: 100%;
+    margin: 15px 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    .saveFileInput {
+        border-radius: 3px;
+        border: none;
+        box-shadow: $centred-shadow;
+
+        height: $elementsHeight;
+        width: 80%;
+        padding-left: 10px;
+        //margin-right: 10px;
+    }
+
+    .saveFileInput::placeholder {
+        font-size: 14px;
+        opacity: 0.4;
+        font-style: italic;
+        font-family: "Inter";
+    }
+
+    .saveFileExtension {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        border-radius: 3px;
+        
+        border: none;
+        box-shadow: $centred-shadow;
+
+        height: $elementsHeight;
+        width: 15%;
+        margin-right: 5px;
+        
+        font-size: 14px;
+        font-weight: bold;
+        color: $dark-color;
+    }
+}
+
+// Footer for: Unsaved File Modal===========================================
+//--------------------------------------------------------------------------
 
 .separatorLine {
     width: 100%;
@@ -122,32 +183,8 @@ $elementsHeight: 32px; //hmmm
     }
 }
 
-/* Save File Modal*/
 //=================================
-.saveFileContent {
-    width: 100%;
-    margin: 15px 0;
-
-    .saveFileInput {
-        border-radius: 3px;
-        border: none;
-        box-shadow: $centred-shadow;
-
-        height: $elementsHeight;
-        width: 100%;
-        padding-left: 10px;
-        //margin-right: 10px;
-    }
-    .saveFileInput::placeholder {
-        font-size: 14px;
-        opacity: 0.4;
-        font-style: italic;
-        font-family: "Inter";
-
-    }
-}
-
-/*General modal layout*/
+/*Modal layout*/
 //=================================
 .overlay {
     position: absolute;
@@ -176,10 +213,6 @@ $elementsHeight: 32px; //hmmm
     -webkit-overflow-scrolling: touch;
     border-radius: 5px;
     outline: none;
-    padding: 18px;
-
-
-    width: 404px;
 
     display: flex;
     flex-direction: column;
