@@ -12,3 +12,6 @@ FUNCT:
     -> Add a general notice popup
 ->Reorganise the modal slice so that we would only have a unique open/close function which recieves a modal ID as a parameter.
 ->Implement closeAllModals for when clicking on a modal overlay
+
+DESÑ:
+->Should redesign the close popup button

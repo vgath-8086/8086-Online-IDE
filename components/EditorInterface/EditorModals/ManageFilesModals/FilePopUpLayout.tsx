@@ -6,6 +6,7 @@ import styles from "styles/SaveAndLoad/PopUp.module.scss"
 interface FilePopUpLayoutInterface {
     headerTitle: string,
     headerIcon: {src: string, alt:string};
+    handleClosing: Function;
     listItems: Array<ReactNode>;
     footer: ReactNode; 
 }
@@ -15,6 +16,13 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
     return (
         <div className={styles.container}>
             <div className={styles.content}>
+                <button 
+                    className={styles.closePopupContainer} 
+                    onClick={()=>{props.handleClosing()}}
+                >
+                    <img src="icons/icon_close_popup.svg" alt="close popup" />
+                </button>
+
                 <div className={styles.headerContainer}>
                     <div className={styles.headerContent}>
                         <img className={styles.icon} src={props.headerIcon.src} alt={props.headerIcon.alt} />

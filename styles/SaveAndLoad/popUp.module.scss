@@ -70,6 +70,19 @@ $warning-color: #FFBA00;
     }
 }
 
+.closePopupContainer {
+    position: absolute;
+    right: 14px;
+    top: 11px + 14px;
+    border: none;
+    background-color: white;
+
+    :hover {
+        opacity: 0.5;
+        cursor: pointer;
+    }
+}
+
 //List Content====================================================================
 //--------------------------------------------------------------------------
 .list {
