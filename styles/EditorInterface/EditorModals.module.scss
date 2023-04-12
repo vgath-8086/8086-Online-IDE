@@ -10,13 +10,97 @@ $warning-color: #FFBA00;
 $elementsHeight: 32px; //hmmm
 
 
-//=================================
-// Standard Modals
-//=================================
+//=============================================================================
+// Standard Modals-------------------------------------------------------------
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 .standardModalContainer {
     padding: 18px;
     width: 404px;
+}
+
+.neuterBackground {
+    background-color: $neuter-color;
+}
+.cautionBackground {
+    background-color: $warning-color;
+}
+.errorBackground {
+    background-color: $warning-color;
+}
+.activeBackground {
+    background-color: $active-color;
+}
+.defaultBackground {
+    background-color: $dark-color;
+}
+
+//Header ====================================================================
+//--------------------------------------------------------------------------
+.titleContainer {
+    //background-color: $warning-color;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 25px;
+
+    margin: 0;
+    margin-bottom: 10px;
+
+    .titleContent {
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+        padding: 2px;
+        padding-left: 4px;
+        padding-right: 8px;
+
+        .titleSpan {
+            color: white;
+            font-size: 16px;
+            padding-left: 5px;
+            padding-bottom: 1px;
+        }
+    
+        .titleIcon {
+            height: 25px;
+        }
+    }
+}
+
+.closePopupContainer {
+    position: absolute;
+    right: 14px;
+    top: 11px + 14px;
+    border: none;
+    background-color: white;
+
+    :hover {
+        opacity: 0.5;
+        cursor: pointer;
+    }
+}
+
+//Footer====================================================================
+//--------------------------------------------------------------------------
+.separatorLine {
+    width: 100%;
+}
+
+.footer {
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+
+    .dontSaveButton {
+        background-color: $warning-color;
+    }
+    .saveButton {
+        background-color: $active-color;
+    }
+    .closeButton {
+        background-color: $neuter-color;
+    }
 }
 
 //Header====================================================================
@@ -92,20 +176,21 @@ $elementsHeight: 32px; //hmmm
     opacity: 0.8;
 }
 
-// Body for: Unsaved File Modal=============================================
+// Body for: Confirm Close File Modal=============================================
 //--------------------------------------------------------------------------
-.unsavedFileContent {
+.confirmCloseFileContent {
     flex: 1;
     margin: 10px 0;
     margin-bottom: 15px;
     
-    .unsavedFileContentMainInfo {
+    .confirmCloseFileMain {
         padding-left: 13px;
         padding-right: 13px;
+        padding-bottom: 7px;
         font-size: 14px;
     }
 
-    .unsavedFileContentSecondatyInfo {
+    .confirmCloseFileDescription {
         padding-left: 13px;
         padding-right: 13px;
         font-size: 12px;   
@@ -115,14 +200,14 @@ $elementsHeight: 32px; //hmmm
 
 // Body for: SaveAs File Modal=============================================
 //--------------------------------------------------------------------------
-.saveFileContent {
+.saveFileAsContent {
     width: 100%;
     margin: 15px 0;
 
     display: flex;
     justify-content: space-between;
 
-    .saveFileInput {
+    .saveFileAsInput {
         border-radius: 3px;
         border: none;
         box-shadow: $centred-shadow;
@@ -133,14 +218,14 @@ $elementsHeight: 32px; //hmmm
         //margin-right: 10px;
     }
 
-    .saveFileInput::placeholder {
+    .saveFileAsInput::placeholder {
         font-size: 14px;
         opacity: 0.4;
         font-style: italic;
         font-family: "Inter";
     }
 
-    .saveFileExtension {
+    .saveFileAsExtension {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -157,6 +242,56 @@ $elementsHeight: 32px; //hmmm
         font-size: 14px;
         font-weight: bold;
         color: $dark-color;
+    }
+}
+
+// Body for: General Message Modal=============================================
+//--------------------------------------------------------------------------
+.generalMessageContent {
+    flex: 1;
+    margin: 10px 0;
+    margin-bottom: 15px;
+    
+    .message {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-bottom: 7px;
+        font-size: 15px;
+    }
+}
+
+// Body for: Compilation Error Modal=============================================
+//--------------------------------------------------------------------------
+.compilationMessageContent {
+    flex: 1;
+    margin: 10px 0;
+    //margin-bottom: 15px;
+    
+    .lineContainer {
+        padding-left: 4px;
+        padding-bottom: 7px;
+        margin-bottom: 10px;
+        font-size: 16px;
+
+        display: flex;
+        align-items: baseline;
+
+        .lineTitle {
+            box-shadow: $centred-shadow;
+            border-radius: 3px;
+            color: $warning-color;
+            padding: 8px;
+            font-size: 16px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .lineMessage {
+            font-size: 16px;
+            padding-left: 12px;
+            flex: 2.8;
+        }
     }
 }
 

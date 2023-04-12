@@ -15,7 +15,6 @@ $header-shadow: 0 4px 12px 0 #D9D5ED;
 
 //Logo =================================================================
 //----------------------------------------------------------------------
-
 .logoContainer{
     display: flex;
 
@@ -82,6 +81,22 @@ $header-shadow: 0 4px 12px 0 #D9D5ED;
             font-family: Inter;
             padding-left: 8px;
         }
+    }
+
+    .fileScrollingMenu {
+        display: none;
+        position: absolute;
+        width: 100%;
+
+    }
+
+    .test {
+        height: 20px;
+        width: 100%;
+    }
+
+    .navButtonContainer:hover > .fileScrollingMenu {
+        display: block;
     }
 
     .navExampleButton {

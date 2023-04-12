@@ -33,8 +33,14 @@ a {
   }
 }
 
+/* REACT MODAL */
+/*-----------------------------------------*/
+.ReactModal__Overlay {
+  z-index: 1000;
+}
 
 /* CODE MIRROR */
+/*-----------------------------------------*/
 .CodeMirror 
 { 
   height: 100%; 
@@ -93,4 +99,6 @@ a {
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kameron&display=swap');
+
+
 

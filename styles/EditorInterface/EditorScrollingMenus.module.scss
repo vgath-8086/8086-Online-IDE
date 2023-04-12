@@ -11,8 +11,8 @@ $separator-color: #D9D5ED40;
 //=====================================
 .FileMenuContainer {
     position: absolute;
-    margin-top: 20px;
-    z-index: 99999;
+    //margin-top: 20px;
+    z-index: 1;
 
     background-color: white;
 
@@ -61,13 +61,9 @@ $separator-color: #D9D5ED40;
 
     }
 
-    $c: "& .actionButton:hover";
-
     .actionListHidden {
         display: none;
     }
-
-
 }
 
 

@@ -6,8 +6,6 @@ import EditorFooter from "./EditorFooter/EditorFooter"
 import EditorHeader from "./EditorHeader/EditorHeader"
 import EditorModalsLayout from "./EditorModals/EditorModalsLayout"
 
-import Modal from 'react-modal';
-
 interface EditorLayoutInterface {
 
 }

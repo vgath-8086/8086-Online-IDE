@@ -15,12 +15,15 @@ export default function EditorHeader(props: EditorHeaderInterface) {
             <LogoBar />
 
             <div className={styles.nav}>
-                <div>
+                <div className={styles.navButtonContainer}>
                     <button className={styles.navButton}>
                         <img className={styles.navIcon} src="icons/header/icon_file_management.svg" alt="icon file management" />
                         <span className={styles.navButtonName}>Files</span>
                     </button>
-                    <FileScrollingMenu />
+                    <div className={styles.fileScrollingMenu}>
+                        <div className={styles.test}>&nbsp;</div>
+                        <FileScrollingMenu/>
+                    </div>
                 </div>
 
 

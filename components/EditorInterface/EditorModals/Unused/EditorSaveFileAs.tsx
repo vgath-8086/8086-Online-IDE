@@ -53,15 +53,15 @@ export default function EditorSaveFileAsFile(props: EditorSaveFileAsInterface) {
                     <span className={styles.saveTitleSpan}>Save Untitled File</span>
                 </h2>
 
-                <div className={styles.saveFileContent}>
+                <div className={styles.saveFileAsContent}>
                     <input 
                         onChange={(e)=>setNewFileName(e.currentTarget.value)}
-                        className={styles.saveFileInput} 
+                        className={styles.saveFileAsInput} 
                         type="text" 
                         placeholder="Enter File Name..." 
                     />
 
-                    <div className={styles.saveFileExtension}>
+                    <div className={styles.saveFileAsExtension}>
                         .asm
                     </div>
                 </div>
