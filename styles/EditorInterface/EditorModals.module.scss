@@ -55,7 +55,6 @@ $elementsHeight: 32px; //hmmm
         padding-left: 4px;
         padding-right: 8px;
 
-
         .titleSpan {
             color: white;
             font-size: 16px;
@@ -84,7 +83,6 @@ $elementsHeight: 32px; //hmmm
 
 //Footer====================================================================
 //--------------------------------------------------------------------------
-
 .separatorLine {
     width: 100%;
 }
@@ -244,6 +242,21 @@ $elementsHeight: 32px; //hmmm
         font-size: 14px;
         font-weight: bold;
         color: $dark-color;
+    }
+}
+
+// Body for: General Message Modal=============================================
+//--------------------------------------------------------------------------
+.generalMessageContent {
+    flex: 1;
+    margin: 10px 0;
+    margin-bottom: 15px;
+    
+    .message {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-bottom: 7px;
+        font-size: 15px;
     }
 }
 

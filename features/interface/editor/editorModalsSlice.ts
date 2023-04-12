@@ -1,27 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ModalId } from "definitions/Modals";
+import { ModalType } from "definitions/Modals";
 
 
 interface EditorModalState {
     isUnsavedFileModalOpen: boolean;
     isSaveAsModalOpen: boolean;
+    isGeneralWarningModalOpen:boolean;
     isErrorModalOpen: boolean;
     isLoadModalOpen: boolean;
     isSaveModalOpen: boolean;
     isManageModalOpen: boolean;
 
-    errorMessage: string;   //TODO: create a standart error popup
+    warningMessage: string;   //TODO: create a standard error popup
 }
 
 const initialState:EditorModalState = {
     isUnsavedFileModalOpen: false,
     isSaveAsModalOpen: false,
+    isGeneralWarningModalOpen: true,
     isErrorModalOpen: false,
     isLoadModalOpen: false,
     isSaveModalOpen: false,
     isManageModalOpen: false,
 
-    errorMessage: '',
+    warningMessage: 'We cannot import the file. The file is too heavy. Please retry with a ligther file.',
 }
 
 //=======================================================================================================
@@ -33,13 +35,13 @@ export const editorModalSlice = createSlice({
 
         //=========================
         //TEST-TMP
-        openModal: (state, action: PayloadAction<ModalId>) => {
+        openModal: (state, action: PayloadAction<ModalType>) => {
             
-            const modalId:ModalId = action.payload
+            const modalId:ModalType = action.payload
 
             switch( modalId ) {
 
-                case ModalId.ConfirmCloseModal:
+                case ModalType.ConfirmCloseModal:
                     state.isUnsavedFileModalOpen = true;
                     break;
 
@@ -47,6 +49,17 @@ export const editorModalSlice = createSlice({
             }
         },
         //=========================
+
+        //Save As File Modal
+        openGeneralWarningModal: (state) => {
+
+            state.isGeneralWarningModalOpen = true;
+        },
+        
+        closeGeneralWarningModal: (state) => {
+            
+            state.isGeneralWarningModalOpen = false;
+        },
 
         //Unsaved File Modal
         openUnsavedFileModal: (state) => {
@@ -113,6 +126,7 @@ export const editorModalSlice = createSlice({
 
 export const {  openUnsavedFileModal, closeUnsavedFileModal, 
                 openSaveAsModal, closeSaveAsModal,
+                openGeneralWarningModal, closeGeneralWarningModal,
                 openLoadModal, closeLoadModal,
                 openSaveModal, closeSaveModal,
                 openManageModal, closeManageModal,

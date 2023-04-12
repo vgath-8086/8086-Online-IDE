@@ -4,15 +4,16 @@ FIXES:
     write again in the empty editor generates an error
 
 FUNCT:
-->Create a standard layout component for all the modals (header, content, footer)
+✔️->Create a standard layout component for all the modals (header, content, footer)
 ->Create a general a "general error" popup
-    -> Extend this popup type to an confirmation popup
+    -> Extend this popup type to the confirmation popup
     -> Create a standard confirmation popup which will take action as parameter
     -> Add a confirmation before deleting a file
     -> Add a general notice popup
 ->Reorganise the modal slice so that we would only have a unique open/close function which recieves a modal ID as a parameter.
 ->Implement closeAllModals for when clicking on a modal overlay
-->Double click on TabBar to open new tab
+✔️->Double click on TabBar to open new tab
+->Add a small animation in the footer when a new info is displayed
 
 DESÑ:
 ->Should redesign the close popup button
