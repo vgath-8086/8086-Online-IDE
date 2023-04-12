@@ -19,6 +19,47 @@ $elementsHeight: 32px; //hmmm
     width: 404px;
 }
 
+.neuterBackground {
+    background-color: $neuter-color;
+}
+.cautionBackground {
+    background-color: $warning-color;
+}
+.errorBackground {
+    background-color: $warning-color;
+}
+.activeBackground {
+    background-color: $active-color;
+}
+.defaultBackground {
+    background-color: $dark-color;
+}
+
+.titleContainer {
+    background-color: $warning-color;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 5px;
+    width: 106px;
+    height: 25px;
+
+    padding: 2px;
+    margin: 0;
+    margin-bottom: 10px;
+    
+    .cautionTitleSpan {
+        color: white;
+        font-size: 16px;
+        padding-left: 5px;
+        padding-bottom: 1px;
+    }
+
+    .cautionTitleIcon {
+        height: 25px;
+    }
+}
+
 //Header====================================================================
 //--------------------------------------------------------------------------
 .cautionTitleContainer {

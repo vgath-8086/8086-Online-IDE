@@ -16,6 +16,8 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
     return (
         <div className={styles.container}>
             <div className={styles.content}>
+
+                {/* Close Modal Button ======================================== */}
                 <button 
                     className={styles.closePopupContainer} 
                     onClick={()=>{props.handleClosing()}}
@@ -23,6 +25,7 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
                     <img src="icons/icon_close_popup.svg" alt="close popup" />
                 </button>
 
+                {/* Header ==================================================== */}
                 <div className={styles.headerContainer}>
                     <div className={styles.headerContent}>
                         <img className={styles.icon} src={props.headerIcon.src} alt={props.headerIcon.alt} />
@@ -32,6 +35,7 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
                     </div>                    
                 </div>
                 
+                {/* Body ==================================================== */}
                 <div className={styles.list}>
                     {props.listItems.map((itemContent, idx)=>( /*change Idx to fileID*/
                         <div className={styles.item} key={idx}>
@@ -40,6 +44,7 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
                     ))}
                 </div>
 
+                {/* Footer ==================================================== */}
                 <div className={styles.footer}>
                     {props.footer}
                 </div>

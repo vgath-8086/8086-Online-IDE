@@ -44,8 +44,8 @@ export default function EditorTabBar(props: EditorTabBarInterface) {
     }
 
     return (
-        <div className={styles.tabBarContainer}>
-            <div className={styles.tabBarContent}>
+        <div className={styles.tabBarContainer} onDoubleClick={()=>dispatch(createFile()) }>
+            <div className={styles.tabBarContent} onDoubleClick={(e)=>e.stopPropagation()}> {/*We stop propagration here to prevent open a new tab from doubleclicking on a tab*/}
                 <div className={styles.emptyLeftSpace}>&nbsp;</div>
                 {generateTabs(files, openedFiles, activeFile)}
             </div>
