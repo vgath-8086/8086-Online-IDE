@@ -48,15 +48,48 @@ $elementsHeight: 32px; //hmmm
     margin: 0;
     margin-bottom: 10px;
     
-    .cautionTitleSpan {
+    .titleSpan {
         color: white;
         font-size: 16px;
         padding-left: 5px;
         padding-bottom: 1px;
     }
 
-    .cautionTitleIcon {
+    .titleIcon {
         height: 25px;
+    }
+}
+
+.closePopupContainer {
+    position: absolute;
+    right: 14px;
+    top: 11px + 14px;
+    border: none;
+    background-color: white;
+
+    :hover {
+        opacity: 0.5;
+        cursor: pointer;
+    }
+}
+
+.separatorLine {
+    width: 100%;
+}
+
+.footer {
+    display: flex;
+    justify-content: right;
+    margin-top: 10px;
+
+    .dontSaveButton {
+        background-color: $warning-color;
+    }
+    .saveButton {
+        background-color: $active-color;
+    }
+    .closeButton {
+        background-color: $neuter-color;
     }
 }
 
@@ -135,18 +168,19 @@ $elementsHeight: 32px; //hmmm
 
 // Body for: Unsaved File Modal=============================================
 //--------------------------------------------------------------------------
-.unsavedFileContent {
+.confirmCloseFileContent {
     flex: 1;
     margin: 10px 0;
     margin-bottom: 15px;
     
-    .unsavedFileContentMainInfo {
+    .confirmCloseFileMain {
         padding-left: 13px;
         padding-right: 13px;
+        padding-bottom: 7px;
         font-size: 14px;
     }
 
-    .unsavedFileContentSecondatyInfo {
+    .confirmCloseFileDescription {
         padding-left: 13px;
         padding-right: 13px;
         font-size: 12px;   

@@ -31,7 +31,7 @@ export default function EditorStandardModalLayout(props: EditorStandardModalLayo
             <Modal
                 isOpen={props.isModalOpen}
                 ariaHideApp={false}
-                contentLabel={props.headerTitle}
+                //contentLabel={props.headerTitle}
                 className={`${styles.content} ${styles.standardModalContainer}`}
             >
 
@@ -44,20 +44,6 @@ export default function EditorStandardModalLayout(props: EditorStandardModalLayo
                 </button>
 
                 {/* Header ==================================================== */}
-                <div className={styles.headerContainer}>
-                    <div className={styles.headerContent}>
-                        <img 
-                            className={styles.icon} 
-                            src={props.headerIcon.src} 
-                            alt={props.headerIcon.alt} 
-                        />
-
-                        <div className={styles.headerTitle}>
-                            {props.headerTitle}
-                        </div>
-                    </div>                    
-                </div>
-                
                 <h2 className={cn([styles.titleContainer, classNameFromDegree[props.headerDegree]])}>
                     <img 
                         className={styles.titleIcon} 
@@ -78,10 +64,11 @@ export default function EditorStandardModalLayout(props: EditorStandardModalLayo
                 <hr className={styles.separatorLine}/>
 
                 <div className={styles.footer}>
-                    {props.actions.map((action: ModalAction) => (
+                    {props.actions.map((action: ModalAction, idx:number) => (
                         <button 
                             onClick={()=>action.callback()}
                             className={cn([styles.button, classNameFromDegree[action.degree]])}
+                            key={idx}
                         >
                             {action.name}
                         </button>
