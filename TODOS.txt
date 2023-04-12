@@ -17,3 +17,7 @@ FUNCT:
 
 DESÑ:
 ->Should redesign the close popup button
+->Should rethink the compilation error is notified: 
+    Is it really a good idea to interreput the use with a Popup when a compilation error is raised?
+    This can fustrate him, espacially if he repeatadly makes mistake in his code. So a more subtle way
+    of displaying the error would be pretty much appreciated.

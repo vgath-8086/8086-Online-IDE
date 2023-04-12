@@ -260,6 +260,41 @@ $elementsHeight: 32px; //hmmm
     }
 }
 
+// Body for: Compilation Error Modal=============================================
+//--------------------------------------------------------------------------
+.compilationMessageContent {
+    flex: 1;
+    margin: 10px 0;
+    //margin-bottom: 15px;
+    
+    .lineContainer {
+        padding-left: 4px;
+        padding-bottom: 7px;
+        margin-bottom: 10px;
+        font-size: 16px;
+
+        display: flex;
+        align-items: baseline;
+
+        .lineTitle {
+            box-shadow: $centred-shadow;
+            border-radius: 3px;
+            color: $warning-color;
+            padding: 8px;
+            font-size: 16px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .lineMessage {
+            font-size: 16px;
+            padding-left: 12px;
+            flex: 2.8;
+        }
+    }
+}
+
 // Footer for: Unsaved File Modal===========================================
 //--------------------------------------------------------------------------
 

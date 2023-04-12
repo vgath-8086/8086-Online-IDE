@@ -8,6 +8,7 @@ import LoadPopUp from "./ManageFilesModals/LoadPopUp"
 import ManagePopUp from "./ManageFilesModals/ManagePopUp"
 import SavePopUp from "./ManageFilesModals/SavePopUp"
 import GeneralWarningModal from "./StandardLayout/GeneralWarningModal/GeneralWarningModal"
+import CompilationErrorModal from "./StandardLayout/CompilationErrorModal.tsx/CompilationErrorModal"
 
 
 // TODO: Create a standard layout component for all the modals (header, content, footer)
@@ -31,6 +32,8 @@ export default function EditorLayout(props: EditorLayoutInterface) {
             <ConfirmCloseFileModal />
             <SaveFileAsModal />
             <GeneralWarningModal />
+
+            <CompilationErrorModal />
 
         </div>
     )

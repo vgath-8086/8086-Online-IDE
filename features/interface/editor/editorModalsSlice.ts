@@ -6,6 +6,7 @@ interface EditorModalState {
     isUnsavedFileModalOpen: boolean;
     isSaveAsModalOpen: boolean;
     isGeneralWarningModalOpen:boolean;
+    isCompilationErrorModalOpen: boolean;
     isErrorModalOpen: boolean;
     isLoadModalOpen: boolean;
     isSaveModalOpen: boolean;
@@ -17,7 +18,9 @@ interface EditorModalState {
 const initialState:EditorModalState = {
     isUnsavedFileModalOpen: false,
     isSaveAsModalOpen: false,
-    isGeneralWarningModalOpen: true,
+    isGeneralWarningModalOpen: false,
+    isCompilationErrorModalOpen: false,
+    
     isErrorModalOpen: false,
     isLoadModalOpen: false,
     isSaveModalOpen: false,
@@ -83,6 +86,17 @@ export const editorModalSlice = createSlice({
             state.isSaveAsModalOpen = false;
         },
 
+        //Save As File Modal
+        openCompilationErrorModal: (state) => {
+
+            state.isCompilationErrorModalOpen = true;
+        },
+        
+        closeCompilationErrorModal: (state) => {
+            
+            state.isCompilationErrorModalOpen = false;
+        },
+
         //File Management Modals
         //)======================================================================
         //Load Modals
@@ -130,6 +144,7 @@ export const {  openUnsavedFileModal, closeUnsavedFileModal,
                 openLoadModal, closeLoadModal,
                 openSaveModal, closeSaveModal,
                 openManageModal, closeManageModal,
+                openCompilationErrorModal, closeCompilationErrorModal,
              } = editorModalSlice.actions
 export type { EditorModalState }
 export default editorModalSlice.reducer
