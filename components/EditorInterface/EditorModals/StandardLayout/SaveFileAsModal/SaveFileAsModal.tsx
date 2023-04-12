@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { closeFile, updateFileName } from "features/file/fileSlice"
+import { closeFile, updateFileName, saveFile } from "features/file/fileSlice"
 import { closeSaveAsModal } from "features/interface/editor/editorModalsSlice"
 
 
@@ -34,13 +34,19 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
             dispatch(updateFileName({
 
-                newName: newFileName,
+                newName: capitalize(`${newFileName}.asm`), //Here we capitalize the first letter for aesthetic purposes only
                 index: fileToSave
             }));   
+            dispatch(saveFile(fileToSave));
 
             dispatch(closeFile(fileToSave));
             dispatch(closeSaveAsModal());
         }
+    }
+
+    function capitalize(s)
+    {
+        return s[0].toUpperCase() + s.slice(1);
     }
 
     return (

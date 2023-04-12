@@ -9,6 +9,7 @@ import editorModalsSlice from 'features/interface/editor/editorModalsSlice'
 interface FilesState {
     files: SourceFile[],
     openedFiles: string[],
+    savedFiles: string[],
     activeFile: string|null,
     fileToSave: string,
 }
@@ -16,6 +17,7 @@ interface FilesState {
 const initialState:FilesState = {
     files: [test__DefaultFile],
     openedFiles: ['0'],
+    savedFiles: ['0'],
     activeFile: '0',
     fileToSave: '',
 }
@@ -26,6 +28,20 @@ export const fileSlice = createSlice({
     name: 'file',
     initialState,
     reducers: {
+
+        //open a close saved file
+        loadFile: (state, action: PayloadAction<string>) => {
+            const index: string = action.payload;
+            
+            if (state.openedFiles.indexOf(index) == -1 && state.savedFiles.indexOf(index) != -1) {
+                
+                state.openedFiles.push(index);
+                state.activeFile = index;            
+            }
+            else {
+                console.warn("Trying to load already openend file or unsaved file, index:" + index); 
+            }
+        },
 
         //Create a new file when clicking on the "plus" button
         createFile: (state) => {
@@ -48,16 +64,6 @@ export const fileSlice = createSlice({
             console.log(state.files);
             
         },
-
-        /*
-        //As soon as a file is opened, it shall be saved onto the state/localStorage
-        openFile: (state, action: PayloadAction<SourceFile>) => {
-            const index: number = state.files.length + 1;
-
-            state.files.push(action.payload);
-            state.openedFiles.push(index);
-        },
-        */
 
         //Switch to a new file when clicking on a TabBarElement
         switchFile: (state, action: PayloadAction<string>) => {
@@ -95,6 +101,12 @@ export const fileSlice = createSlice({
             }
             
             state.files.find(file => file.id == index).name = newName; 
+        },
+
+        saveFile: (state, action: PayloadAction<string>) => {
+            let index = action.payload;
+
+            state.savedFiles.push(index); 
         },
 
         //When an untitled empty file is closed, it shall be deleted 
@@ -149,15 +161,23 @@ export const fileSlice = createSlice({
             
             state.files.splice( deletePosition, 1);
 
+            const savedIndex: number = state.savedFiles.indexOf(index);
+
+            //If the file is saved, we remove it from the saved list
+            if (savedIndex != -1) {
+
+                state.savedFiles.splice( savedIndex, 1);
+            }
+
             const openedIndex: number = state.openedFiles.indexOf(index);
 
             //If the file is not opened, we terminate here
             if (!openedIndex) {
                 return;
             }
-            
-            //Closing the file
-            state.openedFiles.splice( openedIndex, 1);
+
+           //Closing the file
+           state.openedFiles.splice( openedIndex, 1); 
 
             //If the file is active, then we pass the active state to a new file
             if (state.activeFile == index) {
@@ -177,7 +197,7 @@ export const fileSlice = createSlice({
             
                     state.activeFile = state.openedFiles[openedIndex-1]
                 }
-            }
+            }         
         },
 
         setFileToSave: (state, action: PayloadAction<string>) => {
@@ -192,7 +212,8 @@ export const fileSlice = createSlice({
     }
 })
 
-export const { createFile /*,openFile*/, switchFile, updateActiveFileContent, updateFileName,
-                closeFile, deleteFile, setFileToSave, clearFileToSave } = fileSlice.actions
+export const { createFile , loadFile, switchFile, updateActiveFileContent, updateFileName,
+saveFile, closeFile, deleteFile, setFileToSave, clearFileToSave } = fileSlice.actions
+
 export type { FilesState }
 export default fileSlice.reducer

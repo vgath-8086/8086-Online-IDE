@@ -14,6 +14,7 @@ FUNCT:
 ->Implement closeAllModals for when clicking on a modal overlay
 ✔️->Double click on TabBar to open new tab
 ->Add a small animation in the footer when a new info is displayed
+->Add a message on the Save/Load/Manage popups when no file are found
 
 DESÑ:
 ->Should redesign the close popup button
@@ -21,3 +22,6 @@ DESÑ:
     Is it really a good idea to interreput the use with a Popup when a compilation error is raised?
     This can fustrate him, espacially if he repeatadly makes mistake in his code. So a more subtle way
     of displaying the error would be pretty much appreciated.
+
+Bonne idée:
+->Use an AI to generate a default name when saving a new file

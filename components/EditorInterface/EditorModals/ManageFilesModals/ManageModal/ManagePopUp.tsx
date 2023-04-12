@@ -2,7 +2,7 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Modal from 'react-modal'
 
-import FilePopUpLayout from "./FilePopUpLayout"
+import FilePopUpLayout from "../FilePopUpLayout"
 import ManageItem from "./ManageItem"
 import { closeManageModal } from 'features/interface/editor/editorModalsSlice'
 

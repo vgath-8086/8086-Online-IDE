@@ -2,7 +2,7 @@ import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Modal from 'react-modal'
 
-import FilePopUpLayout from "./FilePopUpLayout"
+import FilePopUpLayout from "../FilePopUpLayout"
 import SaveItem from "./SaveItem"
 import SaveFooter from "./SaveFooter"
 import { closeSaveModal } from 'features/interface/editor/editorModalsSlice'

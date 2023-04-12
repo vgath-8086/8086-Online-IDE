@@ -14,7 +14,7 @@ const emptyRegex:RegExp = new RegExp("^((\n|\s|\t| )*|" + defaultContent + ")$",
 
 const test__DefaultFile:SourceFile = {
     id: '0',
-    name: 'testFile.asm',   
+    name: 'TestFile.asm',   
     content: defaultContent,
     creationDate: '',
     lastSave: '',
