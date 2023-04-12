@@ -44,14 +44,16 @@ export default function EditorStandardModalLayout(props: EditorStandardModalLayo
                 </button>
 
                 {/* Header ==================================================== */}
-                <h2 className={cn([styles.titleContainer, classNameFromDegree[props.headerDegree]])}>
-                    <img 
-                        className={styles.titleIcon} 
-                        src={props.headerIcon.src} 
-                        alt={props.headerIcon.alt} 
-                    />
-                    <span className={styles.titleSpan}>
-                        {props.headerTitle}
+                <h2 className={styles.titleContainer}>
+                    <span className={cn([styles.titleContent, classNameFromDegree[props.headerDegree]])}>
+                        <img 
+                            className={styles.titleIcon} 
+                            src={props.headerIcon.src} 
+                            alt={props.headerIcon.alt} 
+                        />
+                        <span className={styles.titleSpan}>
+                            {props.headerTitle}
+                        </span>
                     </span>
                 </h2>
 

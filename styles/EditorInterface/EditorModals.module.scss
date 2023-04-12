@@ -10,9 +10,9 @@ $warning-color: #FFBA00;
 $elementsHeight: 32px; //hmmm
 
 
-//=================================
-// Standard Modals
-//=================================
+//=============================================================================
+// Standard Modals-------------------------------------------------------------
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 .standardModalContainer {
     padding: 18px;
@@ -35,28 +35,37 @@ $elementsHeight: 32px; //hmmm
     background-color: $dark-color;
 }
 
+//Header ====================================================================
+//--------------------------------------------------------------------------
 .titleContainer {
-    background-color: $warning-color;
+    //background-color: $warning-color;
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-radius: 5px;
-    width: 106px;
     height: 25px;
 
-    padding: 2px;
     margin: 0;
     margin-bottom: 10px;
-    
-    .titleSpan {
-        color: white;
-        font-size: 16px;
-        padding-left: 5px;
-        padding-bottom: 1px;
-    }
 
-    .titleIcon {
-        height: 25px;
+    .titleContent {
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+        padding: 2px;
+        padding-left: 4px;
+        padding-right: 8px;
+
+
+        .titleSpan {
+            color: white;
+            font-size: 16px;
+            padding-left: 5px;
+            padding-bottom: 1px;
+        }
+    
+        .titleIcon {
+            height: 25px;
+        }
     }
 }
 
@@ -72,6 +81,9 @@ $elementsHeight: 32px; //hmmm
         cursor: pointer;
     }
 }
+
+//Footer====================================================================
+//--------------------------------------------------------------------------
 
 .separatorLine {
     width: 100%;
@@ -166,7 +178,7 @@ $elementsHeight: 32px; //hmmm
     opacity: 0.8;
 }
 
-// Body for: Unsaved File Modal=============================================
+// Body for: Confirm Close File Modal=============================================
 //--------------------------------------------------------------------------
 .confirmCloseFileContent {
     flex: 1;
@@ -190,14 +202,14 @@ $elementsHeight: 32px; //hmmm
 
 // Body for: SaveAs File Modal=============================================
 //--------------------------------------------------------------------------
-.saveFileContent {
+.saveFileAsContent {
     width: 100%;
     margin: 15px 0;
 
     display: flex;
     justify-content: space-between;
 
-    .saveFileInput {
+    .saveFileAsInput {
         border-radius: 3px;
         border: none;
         box-shadow: $centred-shadow;
@@ -208,14 +220,14 @@ $elementsHeight: 32px; //hmmm
         //margin-right: 10px;
     }
 
-    .saveFileInput::placeholder {
+    .saveFileAsInput::placeholder {
         font-size: 14px;
         opacity: 0.4;
         font-style: italic;
         font-family: "Inter";
     }
 
-    .saveFileExtension {
+    .saveFileAsExtension {
         display: flex;
         align-items: center;
         justify-content: center;

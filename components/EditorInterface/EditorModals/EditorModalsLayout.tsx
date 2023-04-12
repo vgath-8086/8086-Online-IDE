@@ -1,12 +1,13 @@
 import React from "react"
-import EditorCloseUnsavedFile from "./EditorCloseUnsavedFile"
 import EditorCompilationModal from "./EditorCompilationModal"
 import EditorSaveFileAs from "./EditorSaveFileAs"
+import ConfirmCloseFileModal from "./StandardLayout/ConfirmCloseFileModal/ConfirmCloseFileModal"
 
 import LoadPopUp from "./ManageFilesModals/LoadPopUp"
 import ManagePopUp from "./ManageFilesModals/ManagePopUp"
 import SavePopUp from "./ManageFilesModals/SavePopUp"
-import ConfirmCloseFileModal from "./StandardLayout/EditorConfirmCloseFile/ConfirmCloseFileModal"
+import SaveFileAsModal from "./StandardLayout/SaveFileAsModal/SaveFileAsModal"
+
 
 // TODO: Create a standard layout component for all the modals (header, content, footer)
 
@@ -27,6 +28,7 @@ export default function EditorLayout(props: EditorLayoutInterface) {
             <ManagePopUp />
 
             <ConfirmCloseFileModal />
+            <SaveFileAsModal />
         </div>
     )
 }
