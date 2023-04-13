@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { closeFile, updateFileName, saveFile } from "features/file/fileSlice"
 import { closeSaveAsModal } from "features/interface/editor/editorModalsSlice"
 
-
 import { ModalDegree } from "definitions/Modals"
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
 
@@ -17,7 +16,7 @@ interface SaveFileAsModalInterface {
 export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
     const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveAsModalOpen);
-    const fileToSave = useSelector((state:any) => state.fileSystem.fileToSave);
+    const fileToSave = useSelector((state:any) => state.interfaceManagement.editor.modals.fileToSave);
 
     const [newFileName, setNewFileName] = useState<string>('');
 

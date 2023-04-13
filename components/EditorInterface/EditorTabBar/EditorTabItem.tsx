@@ -1,8 +1,8 @@
 import React from "react"
 import cn from 'classnames'
 import { useDispatch, useSelector } from "react-redux"
-import { closeFile, switchFile, setFileToSave } from "features/file/fileSlice"
-import { openUnsavedFileModal } from 'features/interface/editor/editorModalsSlice'
+import { closeFile, switchFile } from "features/file/fileSlice"
+import { openUnsavedFileModal, setFileToSave } from 'features/interface/editor/editorModalsSlice'
 
 import { FileManager, SourceFile } from "definitions/File"
 

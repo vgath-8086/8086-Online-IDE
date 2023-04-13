@@ -18,6 +18,7 @@ interface LoadPopUpInterface {
 export default function LoadPopUp(props: LoadPopUpInterface) {
 
     const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isLoadModalOpen);
+    //should replace this line with a custom-hook
     const files:SourceFile[] = useSelector((state:any) => state.fileSystem.files);
     const savedFiles:string[] = useSelector((state:any) => state.fileSystem.savedFiles);
 

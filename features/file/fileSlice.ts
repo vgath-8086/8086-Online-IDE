@@ -4,14 +4,11 @@ import { v4 as uuidv4 } from 'uuid'
 import  { defaultContent, FileManager, test__DefaultFile } from 'definitions/File'
 import type { SourceFile } from 'definitions/File'
 
-import editorModalsSlice from 'features/interface/editor/editorModalsSlice'
-
 interface FilesState {
     files: SourceFile[],
     openedFiles: string[],
     savedFiles: string[],
     activeFile: string|null,
-    fileToSave: string,
 }
 
 const initialState:FilesState = {
@@ -19,7 +16,6 @@ const initialState:FilesState = {
     openedFiles: ['0'],
     savedFiles: ['0'],
     activeFile: '0',
-    fileToSave: '',
 }
 
 //=======================================================================================================
@@ -168,13 +164,15 @@ export const fileSlice = createSlice({
 
                 state.savedFiles.splice( savedIndex, 1);
             }
+            console.log(savedIndex, index);
 
             const openedIndex: number = state.openedFiles.indexOf(index);
 
             //If the file is not opened, we terminate here
-            if (!openedIndex) {
+            if (openedIndex == -1) {
                 return;
             }
+            console.log(openedIndex, index);
 
            //Closing the file
            state.openedFiles.splice( openedIndex, 1); 
@@ -199,21 +197,11 @@ export const fileSlice = createSlice({
                 }
             }         
         },
-
-        setFileToSave: (state, action: PayloadAction<string>) => {
-
-            state.fileToSave = action.payload
-        },
-
-        clearFileToSave: (state) => {
-
-            state.fileToSave = ''
-        },
     }
 })
 
 export const { createFile , loadFile, switchFile, updateActiveFileContent, updateFileName,
-saveFile, closeFile, deleteFile, setFileToSave, clearFileToSave } = fileSlice.actions
+saveFile, closeFile, deleteFile} = fileSlice.actions
 
 export type { FilesState }
 export default fileSlice.reducer

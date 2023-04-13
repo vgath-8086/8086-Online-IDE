@@ -7,8 +7,9 @@ import okaidia from '@uiw/codemirror-theme-okaidia';
 
 import StreamParserAsm86 from 'definitions/CodeMirror/StreamParserAsm86'
 import ThemeLightBase16 from 'definitions/CodeMirror/ThemeLightBase16'
-import { SourceFile } from 'definitions/File';
+import { FileManager, SourceFile } from 'definitions/File';
 import { updateActiveFileContent } from "features/file/fileSlice"
+import { setFileToSave, openSaveAsModal } from "features/interface/editor/editorModalsSlice"
 
 interface EditorTextAreaInterface {
 
@@ -34,6 +35,23 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
     dispatch(updateActiveFileContent(value))
   }, []);
 
+  const onKeyDown = (e) => {
+    if (e.ctrlKey && e.key === 's') {
+      // Prevent the Save dialog to open
+      e.preventDefault();
+      
+      //TODO: implement a correct save solution once the "saving system" is completed
+      if (FileManager.isUntitled(currentFile)) {
+        dispatch(setFileToSave(currentFile.id))
+        dispatch(openSaveAsModal())
+      }
+      else  {
+
+      }
+	  //dispatch()
+    }
+  }
+
   return (
     <div style={{flex: 1, maxHeight: "100%"}}>
       <CodeMirror
@@ -42,6 +60,7 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
         extensions={[asmLang]}
         height={"100%"}
         onChange={onChange}
+		onKeyDown={onKeyDown}
         style={{fontSize: "16px", outlineStyle: "none", height:"100%",
         boxShadow: "none", borderColor: "transparent", outline: "none" }}
       />

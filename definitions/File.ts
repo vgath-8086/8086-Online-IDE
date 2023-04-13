@@ -114,6 +114,16 @@ class FileManager {
         }
     }
 
+    //Should look for a better way of downloading a file
+    static exportFile(fileName: string, fileContent:string) {      
+        
+        var data = new Blob([fileContent], {type: 'text/plain'});
+        var csvURL = window.URL.createObjectURL(data);
+        var tempLink = document.createElement('a');
+        tempLink.href = csvURL;
+        tempLink.setAttribute('download', fileName);
+        tempLink.click();
+    }  
 }
 
 export type { SourceFile };

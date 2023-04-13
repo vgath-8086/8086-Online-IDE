@@ -4,6 +4,7 @@ FIXES:
     write again in the empty editor generates an error
 
 FUNCT:
+-> Add Ctrl-S support
 ✔️->Create a standard layout component for all the modals (header, content, footer)
 ->Create a general a "general error" popup
     -> Extend this popup type to the confirmation popup
@@ -25,3 +26,5 @@ DESÑ:
 
 Bonne idée:
 ->Use an AI to generate a default name when saving a new file
+->Restructure the modal system using pipelines
+

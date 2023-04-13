@@ -1,6 +1,9 @@
-import React from "react"
+import React, { ReactNode } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Modal from 'react-modal'
+
+import { FileManager, SourceFile } from "definitions/File"
+import { deleteFile } from "features/file/fileSlice"
 
 import FilePopUpLayout from "../FilePopUpLayout"
 import ManageItem from "./ManageItem"
@@ -16,6 +19,10 @@ export default function ManagePopUp(props: ManagePopUpInterface) {
 
     const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isManageModalOpen);
     
+    //should replace this line with a custom-hook
+    const files:SourceFile[] = useSelector((state:any) => state.fileSystem.files);
+    const savedFiles:string[] = useSelector((state:any) => state.fileSystem.savedFiles);
+
     const disptach = useDispatch()
 
     const listItems = [
@@ -29,6 +36,42 @@ export default function ManagePopUp(props: ManagePopUpInterface) {
         disptach(closeManageModal())
     }
 
+    
+    const handleDelete = (fileId: string) => {
+        
+        disptach(deleteFile(fileId))
+        //We don't need to close the Popup after executing the action
+        //disptach(closeManageModal())
+    }
+
+    const handleExport = (fileName: string, fileContent:string) => {
+        
+        FileManager.exportFile(fileName, fileContent);
+        //We don't need to close the Popup after executing the action
+        //disptach(closeManageModal())
+    }
+
+    const generateListItem = (files:SourceFile[]): ReactNode[] => {
+        const tabsList:ReactNode[] = [];       
+        
+        for (const file of files) { 
+
+            if (savedFiles.includes( file.id )) {
+
+                tabsList.push(
+                    <ManageItem 
+                        key={file.id}
+                        fileName={file.name} 
+                        onDeleteClick={()=>handleDelete(file.id)}
+                        onDownloadClick={()=>handleExport(file.name, file.content)}
+                    />
+                )
+            }
+        }
+
+        return tabsList;
+    }
+
     return (
         <Modal
             isOpen={isModalOpen}
@@ -39,7 +82,7 @@ export default function ManagePopUp(props: ManagePopUpInterface) {
                 headerTitle="Explorer"
                 headerIcon={{src: "/icons/icon_manage_files.svg", alt:"Icon manage files"}}
                 handleClosing={() => handleClosing()}
-                listItems={listItems}
+                listItems={generateListItem(files)}
                 footer={<></>}
             />
         </Modal>
