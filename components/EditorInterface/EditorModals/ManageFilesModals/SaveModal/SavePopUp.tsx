@@ -1,13 +1,17 @@
-import React from "react"
-import { useSelector, useDispatch } from "react-redux"
+import React, { ReactNode } from "react"
 import Modal from 'react-modal'
+import { useSelector, useDispatch } from "react-redux"
+
+import { closeSaveModal } from 'features/interface/editor/editorModalsSlice'
+import useGenerateListItem, { ListItemFilterBy } from "hoeks/useGenerateListItem"
 
 import FilePopUpLayout from "../FilePopUpLayout"
 import SaveItem from "./SaveItem"
 import SaveFooter from "./SaveFooter"
-import { closeSaveModal } from 'features/interface/editor/editorModalsSlice'
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
+import { SourceFile } from "definitions/File"
+
 
 interface SavePopUpInterface {
 
@@ -15,15 +19,23 @@ interface SavePopUpInterface {
 
 export default function SavePopUp(props: SavePopUpInterface) {
 
+    const disptach = useDispatch(),
+          [ generateListItem ] = useGenerateListItem(ListItemFilterBy.savedFiles)
+
     const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveModalOpen);
 
-    const disptach = useDispatch()
-
-    const listItems = [
-        <SaveItem fileName="Exo1" onSaveAsClick={undefined} />,
-        <SaveItem fileName="Exo_tp_2" onSaveAsClick={undefined} />,
-        <SaveItem fileName="Exo_tp_bis" onSaveAsClick={undefined} />
-    ]
+    //---------------------------------------------
+    //We generate the list of items
+    //---------------------------------------------
+    const listItems:ReactNode[] = generateListItem(
+        (file: SourceFile) => (
+            <SaveItem 
+                key={file.id}
+                fileName={file.name} 
+                onSaveAsClick={undefined} 
+            />    
+        )
+    );
 
     const handleClosing = () => {
 
