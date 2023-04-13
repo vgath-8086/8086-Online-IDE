@@ -34,9 +34,11 @@ const useGetFileListItem = (filterBy: ListItemFilterBy) => {
         
         for (const file of files) { 
 
-            if (filterIndices.includes( file.id )) {
+            //Here we retrieve the index in order to return an ordered final list
+            const index = filterIndices.indexOf(file.id)
+            if(index != -1) {
 
-                tabsList.push(generateItem(file))
+                tabsList.splice(index, 0, generateItem(file))
             }
         }
 

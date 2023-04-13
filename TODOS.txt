@@ -2,7 +2,7 @@
 FIXES:
 ✔️->When creating a new file by writing in an empty editor, then closing this file without saving it
     write again in the empty editor generates an error
-->The order in which the tabs are loaded
+✔️->The order in which the tabs are loaded
 
 FUNCT:
 ->Add Ctrl-S support
