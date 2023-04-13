@@ -10,6 +10,7 @@ import FilePopUpLayout from "../FilePopUpLayout"
 import LoadItem from "./LoadItem"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
+import useGenerateListItem, { ListItemFilterBy } from "hoeks/useGenerateListItem"
 
 interface LoadPopUpInterface {
 
@@ -17,18 +18,23 @@ interface LoadPopUpInterface {
 
 export default function LoadPopUp(props: LoadPopUpInterface) {
 
-    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isLoadModalOpen);
-    //should replace this line with a custom-hook
-    const files:SourceFile[] = useSelector((state:any) => state.fileSystem.files);
-    const savedFiles:string[] = useSelector((state:any) => state.fileSystem.savedFiles);
+    const disptach = useDispatch(),
+          [generateListItem] = useGenerateListItem(ListItemFilterBy.savedFiles)
 
-    const disptach = useDispatch()
+    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isLoadModalOpen)
 
-    const listItems = [
-        <LoadItem fileName="Exo1" onLoadClick={()=>[]} />,
-        <LoadItem fileName="Exo_tp_2" onLoadClick={()=>[]} />,
-        <LoadItem fileName="Exo_tp_bis" onLoadClick={()=>[]} />
-    ]
+    //---------------------------------------------
+    //We generate the list of items
+    //---------------------------------------------
+    const listItems:ReactNode[] = generateListItem(
+        (file: SourceFile) => (
+            <LoadItem 
+                key={file.id}
+                fileName={file.name} 
+                onLoadClick={()=>handleLoad(file.id)}
+            />  
+        )
+    );
 
     const handleClosing = () => {
 
@@ -41,26 +47,6 @@ export default function LoadPopUp(props: LoadPopUpInterface) {
         disptach(closeLoadModal())
     }
 
-    const generateListItem = (files:SourceFile[]): ReactNode[] => {
-        const tabsList:ReactNode[] = [];       
-        
-        for (const file of files) { 
-
-            if (savedFiles.includes( file.id )) {
-
-                tabsList.push(
-                    <LoadItem 
-                        key={file.id}
-                        fileName={file.name} 
-                        onLoadClick={()=>handleLoad(file.id)}
-                    />
-                )
-            }
-        }
-
-        return tabsList;
-    }
-
     return (
         <Modal
             isOpen={isModalOpen}
@@ -71,7 +57,7 @@ export default function LoadPopUp(props: LoadPopUpInterface) {
                 headerTitle="Load File"
                 headerIcon={{src: "/icons/icon_load_file.svg", alt:"Icon load file"}}
                 handleClosing={() => handleClosing()}
-                listItems={generateListItem(files)}
+                listItems={listItems}
                 footer={<></>}
             />
         </Modal>
