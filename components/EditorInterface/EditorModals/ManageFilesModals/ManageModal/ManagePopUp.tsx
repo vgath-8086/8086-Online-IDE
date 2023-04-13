@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 
 import { FileManager, SourceFile } from "definitions/File"
 import { deleteFile } from "features/file/fileSlice"
+import useExportFile from "hoeks/useExportFile";
 
 import FilePopUpLayout from "../FilePopUpLayout"
 import ManageItem from "./ManageItem"
@@ -17,13 +18,14 @@ interface ManagePopUpInterface {
 
 export default function ManagePopUp(props: ManagePopUpInterface) {
 
+    const disptach = useDispatch()
+    const [handleExportFile] = useExportFile()
     const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isManageModalOpen);
     
     //should replace this line with a custom-hook
-    const files:SourceFile[] = useSelector((state:any) => state.fileSystem.files);
-    const savedFiles:string[] = useSelector((state:any) => state.fileSystem.savedFiles);
+    const files:SourceFile[] = useSelector((state:any) => state.fileSystem.files),
+          savedFiles:string[] = useSelector((state:any) => state.fileSystem.savedFiles)
 
-    const disptach = useDispatch()
 
     const listItems = [
         <ManageItem fileName="Exo1" onDownloadClick={()=>[]} onDeleteClick={()=>[]} />,
@@ -44,9 +46,9 @@ export default function ManagePopUp(props: ManagePopUpInterface) {
         //disptach(closeManageModal())
     }
 
-    const handleExport = (fileName: string, fileContent:string) => {
+    const handleExport = (fileId: string) => {
         
-        FileManager.exportFile(fileName, fileContent);
+        handleExportFile(fileId);
         //We don't need to close the Popup after executing the action
         //disptach(closeManageModal())
     }
@@ -63,7 +65,7 @@ export default function ManagePopUp(props: ManagePopUpInterface) {
                         key={file.id}
                         fileName={file.name} 
                         onDeleteClick={()=>handleDelete(file.id)}
-                        onDownloadClick={()=>handleExport(file.name, file.content)}
+                        onDownloadClick={()=>handleExport(file.id)}
                     />
                 )
             }
