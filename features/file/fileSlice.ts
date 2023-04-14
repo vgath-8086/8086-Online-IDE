@@ -31,7 +31,17 @@ export const fileSlice = createSlice({
             
             if (state.openedFiles.indexOf(index) == -1 && state.savedFiles.indexOf(index) != -1) {
                 
-                state.openedFiles.push(index);
+                const openIndex:number = state.openedFiles.indexOf(state.activeFile)
+                
+                if (openIndex != -1) {
+                    
+                    state.openedFiles.splice(openIndex+1, 0, index)
+                }
+                else {
+
+                    state.openedFiles.push(index);
+                }
+
                 state.activeFile = index;            
             }
             else {
@@ -67,6 +77,8 @@ export const fileSlice = createSlice({
 
             state.activeFile = index
         },
+
+        //TODO: try to unify the update actions into one
 
         //Update file content as we write in it
         updateActiveFileContent: (state, action: PayloadAction<string>) => {
@@ -104,6 +116,20 @@ export const fileSlice = createSlice({
 
             state.savedFiles.push(index); 
         },
+
+        /*saveFileAs: (state, action: PayloadAction<{newName:string, index:string}>) => {
+            let index = action.payload;
+
+            state.savedFiles.push(index); 
+            let {index, newName} = action.payload;
+
+            //Quick fix if the user provided an empty string
+            if (newName.length == 0) {
+                newName = `up-${state.files.find(file => file.id == index).name}`;
+            }
+            
+            state.files.find(file => file.id == index).name = newName; 
+        },*/
 
         //When an untitled empty file is closed, it shall be deleted 
         closeFile: (state, action: PayloadAction<string>) => {

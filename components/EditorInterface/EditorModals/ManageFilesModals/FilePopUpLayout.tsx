@@ -42,6 +42,12 @@ export default function FilePopUpLayout(props: FilePopUpLayoutInterface) {
                             {itemContent}
                         </div>
                     ))}
+                    {props.listItems.length == 0 &&
+                    <div className={styles.emptyListContainer}>
+                        <img className={styles.emptyIcon} src="icons/icon_empty_file_list.svg" alt="empty file list" />
+                        <div className={styles.emptyMessage} >Empty repository <br/> No file saved</div>
+                    </div>
+                    }
                 </div>
 
                 {/* Footer ==================================================== */}
