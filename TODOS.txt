@@ -17,6 +17,7 @@ FUNCT:
 ✔️->Double click on TabBar to open new tab
 ->Add a small animation in the footer when a new info is displayed
 ->Add a message on the Save/Load/Manage popups when no file are found
+->Make tab draggable
 
 DESÑ:
 ->Should redesign the close popup button

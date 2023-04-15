@@ -42,6 +42,10 @@ export default function SavePopUp(props: SavePopUpInterface) {
         disptach(closeSaveModal())
     }
 
+    const handleSaving = (fileName: string) => {
+        
+    }
+
     return (
         <Modal
             isOpen={isModalOpen}
@@ -53,7 +57,7 @@ export default function SavePopUp(props: SavePopUpInterface) {
                 headerIcon={{src: "/icons/icon_save_file.svg", alt:"Icon save file"}}
                 handleClosing={() => handleClosing()}
                 listItems={listItems}
-                footer={<SaveFooter onSave={()=>{}}/>}
+                footer={<SaveFooter onSave={() => handleSaving()}/>}
             />
         </Modal>
     )

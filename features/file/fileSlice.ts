@@ -7,7 +7,7 @@ import type { SourceFile } from 'definitions/File'
 interface FilesState {
     files: SourceFile[],
     openedFiles: string[],
-    savedFiles: string[],
+    savedFiles: string[],       //Note: Should change the savedFiles list into a set and manage the saving order using timestamps
     activeFile: string|null,
 }
 
@@ -114,22 +114,44 @@ export const fileSlice = createSlice({
         saveFile: (state, action: PayloadAction<string>) => {
             let index = action.payload;
 
-            state.savedFiles.push(index); 
+            //Verify in order to avoid 
+            if ( !state.savedFiles.includes(index) ) {
+                
+                state.savedFiles.push(index)
+            }
+            else {
+
+                console.warn(`The file ${index} is already saved`)
+            }
         },
 
-        /*saveFileAs: (state, action: PayloadAction<{newName:string, index:string}>) => {
-            let index = action.payload;
-
-            state.savedFiles.push(index); 
+        saveFileAs: (state, action: PayloadAction<{newName:string, index:string}>) => {
             let {index, newName} = action.payload;
 
             //Quick fix if the user provided an empty string
             if (newName.length == 0) {
                 newName = `up-${state.files.find(file => file.id == index).name}`;
             }
+
+            if ( !state.savedFiles.includes(index) ) {
+                
+                state.savedFiles.push(index)
+            }
+            else {
+
+                console.warn(`The file ${index} is already saved`)
+            }
+
+            //=================
+            const filePosition:number = FileManager.findFilePosition(state.files, index)
+            
+            //If the file already exist, 
+            if ( filePosition != -1 ) {
+
+            }
             
             state.files.find(file => file.id == index).name = newName; 
-        },*/
+        },
 
         //When an untitled empty file is closed, it shall be deleted 
         closeFile: (state, action: PayloadAction<string>) => {
