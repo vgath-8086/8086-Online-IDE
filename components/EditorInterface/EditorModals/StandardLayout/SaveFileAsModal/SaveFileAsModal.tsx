@@ -53,7 +53,7 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
             isModalOpen={isModalOpen}
             handleClosing={() => handleClose()}
 
-            headerTitle="Save Untitled File"
+            headerTitle="Save File"
             headerIcon={{src: "icons/icon_save_file.svg", alt: 'save'}}
             headerDegree={ModalDegree.Default}
 

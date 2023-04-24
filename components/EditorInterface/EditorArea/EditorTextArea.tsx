@@ -8,7 +8,7 @@ import okaidia from '@uiw/codemirror-theme-okaidia';
 import StreamParserAsm86 from 'definitions/CodeMirror/StreamParserAsm86'
 import ThemeLightBase16 from 'definitions/CodeMirror/ThemeLightBase16'
 import { FileManager, SourceFile } from 'definitions/File';
-import { updateActiveFileContent } from "features/file/fileSlice"
+import { updateFileContent } from "features/file/fileSlice"
 import { setFileToSave, openSaveAsModal } from "features/interface/editor/editorModalsSlice"
 
 interface EditorTextAreaInterface {
@@ -32,7 +32,8 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
   const defaultText = '\r\norg 0h\r\n\r\nret\r\n';
 
   const onChange = React.useCallback((value, viewUpdate) => {
-    dispatch(updateActiveFileContent(value))
+    
+    dispatch(updateFileContent({index: null, newContent: value}))
   }, []);
 
   const onKeyDown = (e) => {
@@ -41,13 +42,14 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
       e.preventDefault();
       
       //TODO: implement a correct save solution once the "saving system" is completed
-      if (FileManager.isUntitled(currentFile)) {
+      //if (FileManager.isUntitled(currentFile)) {
+
         dispatch(setFileToSave(currentFile.id))
         dispatch(openSaveAsModal())
-      }
+      /*}
       else  {
 
-      }
+      }*/
 	  //dispatch()
     }
   }

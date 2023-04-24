@@ -2,6 +2,7 @@ import React, { ReactNode } from "react"
 import Modal from 'react-modal'
 import { useSelector, useDispatch } from "react-redux"
 
+import { saveFileAs } from "features/file/fileSlice"
 import { closeSaveModal } from 'features/interface/editor/editorModalsSlice'
 import useGenerateListItem, { ListItemFilterBy } from "hoeks/useGenerateListItem"
 
@@ -44,6 +45,7 @@ export default function SavePopUp(props: SavePopUpInterface) {
 
     const handleSaving = (fileName: string) => {
         
+        disptach(saveFileAs({index: null, newName: fileName}))
     }
 
     return (
@@ -57,7 +59,7 @@ export default function SavePopUp(props: SavePopUpInterface) {
                 headerIcon={{src: "/icons/icon_save_file.svg", alt:"Icon save file"}}
                 handleClosing={() => handleClosing()}
                 listItems={listItems}
-                footer={<SaveFooter onSave={() => handleSaving()}/>}
+                footer={<SaveFooter onSave={(fileName:string) => handleSaving(fileName)}/>}
             />
         </Modal>
     )

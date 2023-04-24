@@ -81,22 +81,24 @@ export const fileSlice = createSlice({
         //TODO: try to unify the update actions into one
 
         //Update file content as we write in it
-        updateActiveFileContent: (state, action: PayloadAction<string>) => {
-            const newContent:string = action.payload;
+        updateFileContent: (state, action: PayloadAction<{newContent:string, index:string|null}>) => {
+            let {index, newContent} = action.payload;
 
-            if (state.activeFile) {
+            if (index == null && !state.activeFile) {
 
-                state.files.find(file => file.id == state.activeFile).content = newContent; // Check this line
-            }
-            //If there is no active file, we create a new untitled file
-            else {
                 const fileName:string = FileManager.generateUntitledName(state.files),
                       createdFile:SourceFile = FileManager.newSourceFile(fileName, newContent);
 
-                state.files.push(createdFile);
-                state.openedFiles.push(createdFile.id);
-                state.activeFile = createdFile.id;
+                state.files.push(createdFile)
+                state.openedFiles.push(createdFile.id)
+                state.activeFile = createdFile.id            
             }
+            else if (index == null && state.activeFile) {
+
+                index = state.activeFile
+            }
+
+            state.files.find(file => file.id == state.activeFile).content = newContent; // Check this line
         },
 
         //TO DO: We should verify here if the name is not already taken
@@ -111,54 +113,49 @@ export const fileSlice = createSlice({
             state.files.find(file => file.id == index).name = newName; 
         },
 
-        saveFile: (state, action: PayloadAction<string>) => {
-            let index = action.payload;
+        saveFile: (state, action: PayloadAction<string|null>) => {
+            let index = action.payload
 
-            //Verify in order to avoid 
-            if ( !state.savedFiles.includes(index) ) {
-                
-                state.savedFiles.push(index)
+            if (index == null && state.activeFile) {
+
+                index = state.activeFile
+            }
+
+            if (!state.savedFiles.includes(index)) {
+
+                state.savedFiles.push(index);
             }
             else {
 
-                console.warn(`The file ${index} is already saved`)
+                console.warn("File-Slice Warning: Trying to save already saved file")
             }
         },
 
-        saveFileAs: (state, action: PayloadAction<{newName:string, index:string}>) => {
+        saveFileAs: (state, action: PayloadAction<{newName:string, index:string|null}>) => {
             let {index, newName} = action.payload;
+
+            if (index == null && state.activeFile) {
+
+                index = state.activeFile
+            }
+
+            if (!state.savedFiles.includes(index)) {
+
+                state.savedFiles.push(index);
+            }           
 
             //Quick fix if the user provided an empty string
             if (newName.length == 0) {
+
                 newName = `up-${state.files.find(file => file.id == index).name}`;
             }
-
-            if ( !state.savedFiles.includes(index) ) {
-                
-                state.savedFiles.push(index)
-            }
-            else {
-
-                console.warn(`The file ${index} is already saved`)
-            }
-
-            //=================
-            const filePosition:number = FileManager.findFilePosition(state.files, index)
             
-            //If the file already exist, 
-            if ( filePosition != -1 ) {
-
-            }
-            
-            state.files.find(file => file.id == index).name = newName; 
+            state.files.find(file => file.id == index).name = newName
         },
 
         //When an untitled empty file is closed, it shall be deleted 
         closeFile: (state, action: PayloadAction<string>) => {
-            const   index: string = action.payload,
-
-                    untitledRegex: RegExp = FileManager.untitledRegex,
-                    emptyRegex: RegExp = FileManager.emptyRegex; 
+            const   index: string = action.payload
 
             //We remove the file from the openedFiles list
             const openedIndex: number = state.openedFiles.indexOf(index);
@@ -248,8 +245,8 @@ export const fileSlice = createSlice({
     }
 })
 
-export const { createFile , loadFile, switchFile, updateActiveFileContent, updateFileName,
-saveFile, closeFile, deleteFile} = fileSlice.actions
+export const { createFile , loadFile, switchFile, updateFileContent, updateFileName,
+saveFile, saveFileAs, closeFile, deleteFile} = fileSlice.actions
 
 export type { FilesState }
 export default fileSlice.reducer
