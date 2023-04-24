@@ -1,11 +1,10 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { closeFile, updateFileName } from "features/file/fileSlice"
-import { closeSaveAsModal } from "features/interface/editor/editorModalsSlice"
+import { ModalDegree, ModalType } from "definitions/Modals"
+import { updateFileName, saveFile } from "features/file/fileSlice"
+import { closeModal, shiftJobOutPipeLine } from "features/interface/editor/editorModalsSlice"
 
-
-import { ModalDegree } from "definitions/Modals"
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
@@ -16,8 +15,10 @@ interface SaveFileAsModalInterface {
 
 export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
-    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveAsModalOpen);
-    const fileToSave = useSelector((state:any) => state.fileSystem.fileToSave);
+    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.modalsOpenState)[ModalType.SaveAsModal];
+    const fileToSave = useSelector((state:any) => state.interfaceManagement.editor.modals.fileToSave);
+    
+    const pipeline:Function[] = useSelector((state:any) => state.interfaceManagement.editor.modals.modalPipLine);
 
     const [newFileName, setNewFileName] = useState<string>('');
 
@@ -25,7 +26,7 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
     const handleClose = () => {
 
-        dispatch(closeSaveAsModal());
+        dispatch(closeModal(ModalType.SaveAsModal));
     }
 
     const handleSave = () => {
@@ -34,13 +35,24 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
             dispatch(updateFileName({
 
-                newName: newFileName,
+                newName: capitalize(`${newFileName}.asm`), //Here we capitalize the first letter for aesthetic purposes only
                 index: fileToSave
             }));   
 
-            dispatch(closeFile(fileToSave));
-            dispatch(closeSaveAsModal());
+            dispatch(saveFile(fileToSave));
+            dispatch(closeModal(ModalType.SaveAsModal));
+
+            if (pipeline.length > 0) {
+
+                dispatch(pipeline[0](fileToSave));
+                dispatch(shiftJobOutPipeLine());
+            }
         }
+    }
+
+    function capitalize(s)
+    {
+        return s[0].toUpperCase() + s.slice(1);
     }
 
     return (
@@ -48,7 +60,7 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
             isModalOpen={isModalOpen}
             handleClosing={() => handleClose()}
 
-            headerTitle="Save Untitled File"
+            headerTitle="Save File"
             headerIcon={{src: "icons/icon_save_file.svg", alt: 'save'}}
             headerDegree={ModalDegree.Default}
 

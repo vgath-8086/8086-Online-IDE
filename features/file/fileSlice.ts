@@ -4,20 +4,18 @@ import { v4 as uuidv4 } from 'uuid'
 import  { defaultContent, FileManager, test__DefaultFile } from 'definitions/File'
 import type { SourceFile } from 'definitions/File'
 
-import editorModalsSlice from 'features/interface/editor/editorModalsSlice'
-
 interface FilesState {
     files: SourceFile[],
     openedFiles: string[],
+    savedFiles: string[],       //Note: Should change the savedFiles list into a set and manage the saving order using timestamps
     activeFile: string|null,
-    fileToSave: string,
 }
 
 const initialState:FilesState = {
     files: [test__DefaultFile],
     openedFiles: ['0'],
+    savedFiles: ['0'],
     activeFile: '0',
-    fileToSave: '',
 }
 
 //=======================================================================================================
@@ -26,6 +24,30 @@ export const fileSlice = createSlice({
     name: 'file',
     initialState,
     reducers: {
+
+        //open a close saved file
+        loadFile: (state, action: PayloadAction<string>) => {
+            const index: string = action.payload;
+            
+            if (state.openedFiles.indexOf(index) == -1 && state.savedFiles.indexOf(index) != -1) {
+                
+                const openIndex:number = state.openedFiles.indexOf(state.activeFile)
+                
+                if (openIndex != -1) {
+                    
+                    state.openedFiles.splice(openIndex+1, 0, index)
+                }
+                else {
+
+                    state.openedFiles.push(index);
+                }
+
+                state.activeFile = index;            
+            }
+            else {
+                console.warn("Trying to load already openend file or unsaved file, index:" + index); 
+            }
+        },
 
         //Create a new file when clicking on the "plus" button
         createFile: (state) => {
@@ -49,16 +71,6 @@ export const fileSlice = createSlice({
             
         },
 
-        /*
-        //As soon as a file is opened, it shall be saved onto the state/localStorage
-        openFile: (state, action: PayloadAction<SourceFile>) => {
-            const index: number = state.files.length + 1;
-
-            state.files.push(action.payload);
-            state.openedFiles.push(index);
-        },
-        */
-
         //Switch to a new file when clicking on a TabBarElement
         switchFile: (state, action: PayloadAction<string>) => {
             const index: string = action.payload;
@@ -66,23 +78,27 @@ export const fileSlice = createSlice({
             state.activeFile = index
         },
 
+        //TODO: try to unify the update actions into one
+
         //Update file content as we write in it
-        updateActiveFileContent: (state, action: PayloadAction<string>) => {
-            const newContent:string = action.payload;
+        updateFileContent: (state, action: PayloadAction<{newContent:string, index:string|null}>) => {
+            let {index, newContent} = action.payload;
 
-            if (state.activeFile) {
+            if (index == null && !state.activeFile) {
 
-                state.files.find(file => file.id == state.activeFile).content = newContent; // Check this line
-            }
-            //If there is no active file, we create a new untitled file
-            else {
                 const fileName:string = FileManager.generateUntitledName(state.files),
                       createdFile:SourceFile = FileManager.newSourceFile(fileName, newContent);
 
-                state.files.push(createdFile);
-                state.openedFiles.push(createdFile.id);
-                state.activeFile = createdFile.id;
+                state.files.push(createdFile)
+                state.openedFiles.push(createdFile.id)
+                state.activeFile = createdFile.id            
             }
+            else if (index == null && state.activeFile) {
+
+                index = state.activeFile
+            }
+
+            state.files.find(file => file.id == state.activeFile).content = newContent; // Check this line
         },
 
         //TO DO: We should verify here if the name is not already taken
@@ -97,12 +113,49 @@ export const fileSlice = createSlice({
             state.files.find(file => file.id == index).name = newName; 
         },
 
+        saveFile: (state, action: PayloadAction<string|null>) => {
+            let index = action.payload
+
+            if (index == null && state.activeFile) {
+
+                index = state.activeFile
+            }
+
+            if (!state.savedFiles.includes(index)) {
+
+                state.savedFiles.push(index);
+            }
+            else {
+
+                console.warn("File-Slice Warning: Trying to save already saved file")
+            }
+        },
+
+        saveFileAs: (state, action: PayloadAction<{newName:string, index:string|null}>) => {
+            let {index, newName} = action.payload;
+
+            if (index == null && state.activeFile) {
+
+                index = state.activeFile
+            }
+
+            if (!state.savedFiles.includes(index)) {
+
+                state.savedFiles.push(index);
+            }           
+
+            //Quick fix if the user provided an empty string
+            if (newName.length == 0) {
+
+                newName = `up-${state.files.find(file => file.id == index).name}`;
+            }
+            
+            state.files.find(file => file.id == index).name = newName
+        },
+
         //When an untitled empty file is closed, it shall be deleted 
         closeFile: (state, action: PayloadAction<string>) => {
-            const   index: string = action.payload,
-
-                    untitledRegex: RegExp = FileManager.untitledRegex,
-                    emptyRegex: RegExp = FileManager.emptyRegex; 
+            const   index: string = action.payload
 
             //We remove the file from the openedFiles list
             const openedIndex: number = state.openedFiles.indexOf(index);
@@ -149,15 +202,25 @@ export const fileSlice = createSlice({
             
             state.files.splice( deletePosition, 1);
 
+            const savedIndex: number = state.savedFiles.indexOf(index);
+
+            //If the file is saved, we remove it from the saved list
+            if (savedIndex != -1) {
+
+                state.savedFiles.splice( savedIndex, 1);
+            }
+            console.log(savedIndex, index);
+
             const openedIndex: number = state.openedFiles.indexOf(index);
 
             //If the file is not opened, we terminate here
-            if (!openedIndex) {
+            if (openedIndex == -1) {
                 return;
             }
-            
-            //Closing the file
-            state.openedFiles.splice( openedIndex, 1);
+            console.log(openedIndex, index);
+
+           //Closing the file
+           state.openedFiles.splice( openedIndex, 1); 
 
             //If the file is active, then we pass the active state to a new file
             if (state.activeFile == index) {
@@ -177,22 +240,13 @@ export const fileSlice = createSlice({
             
                     state.activeFile = state.openedFiles[openedIndex-1]
                 }
-            }
-        },
-
-        setFileToSave: (state, action: PayloadAction<string>) => {
-
-            state.fileToSave = action.payload
-        },
-
-        clearFileToSave: (state) => {
-
-            state.fileToSave = ''
+            }         
         },
     }
 })
 
-export const { createFile /*,openFile*/, switchFile, updateActiveFileContent, updateFileName,
-                closeFile, deleteFile, setFileToSave, clearFileToSave } = fileSlice.actions
+export const { createFile , loadFile, switchFile, updateFileContent, updateFileName,
+saveFile, saveFileAs, closeFile, deleteFile} = fileSlice.actions
+
 export type { FilesState }
 export default fileSlice.reducer

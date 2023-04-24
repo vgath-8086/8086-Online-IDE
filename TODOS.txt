@@ -1,19 +1,24 @@
 
 FIXES:
-->When creating a new file by writing in an empty editor, then closing this file without saving it
+✔️->When creating a new file by writing in an empty editor, then closing this file without saving it
     write again in the empty editor generates an error
+✔️->The order in which the tabs are loaded
+✔️->When double-clicking on the "+" button to add a file, two files are add to the file system
 
 FUNCT:
+✔️->Add Ctrl-S support
 ✔️->Create a standard layout component for all the modals (header, content, footer)
 ->Create a general a "general error" popup
     -> Extend this popup type to the confirmation popup
     -> Create a standard confirmation popup which will take action as parameter
     -> Add a confirmation before deleting a file
     -> Add a general notice popup
-->Reorganise the modal slice so that we would only have a unique open/close function which recieves a modal ID as a parameter.
+✔️->Reorganise the modal slice so that we would only have a unique open/close function which recieves a modal ID as a parameter.
 ->Implement closeAllModals for when clicking on a modal overlay
 ✔️->Double click on TabBar to open new tab
 ->Add a small animation in the footer when a new info is displayed
+->Add a message on the Save/Load/Manage popups when no file are found
+->Make tab draggable
 
 DESÑ:
 ->Should redesign the close popup button
@@ -21,3 +26,8 @@ DESÑ:
     Is it really a good idea to interreput the use with a Popup when a compilation error is raised?
     This can fustrate him, espacially if he repeatadly makes mistake in his code. So a more subtle way
     of displaying the error would be pretty much appreciated.
+
+Bonne idée:
+->Use an AI to generate a default name when saving a new file
+->Restructure the modal system using pipelines
+

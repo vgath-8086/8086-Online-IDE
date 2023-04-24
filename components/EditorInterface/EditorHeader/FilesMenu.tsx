@@ -1,35 +1,47 @@
 import React, { useState } from "react"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames"
 
-import { openLoadModal, openSaveModal, openManageModal } from 'features/interface/editor/editorModalsSlice'
+import { openModal } from 'features/interface/editor/editorModalsSlice'
 
 import styles from "styles/EditorInterface/EditorScrollingMenus.module.scss"
+import useExportFile from "hoeks/useExportFile";
+import { ModalType } from "definitions/Modals";
 
-interface FileScrollingMenuInterface {
+interface FileMenuInterface {
 
 }
 
-export default function FileScrollingMenu(props: FileScrollingMenuInterface) {
+export default function FileMenu(props: FileMenuInterface) {
 
     const [displayActionList, setDisplayActionList] = useState<boolean>(false);
+    const [ handleExportFile ] = useExportFile()
 
     const disptach = useDispatch();
    
+    const handleImport = () => {
+
+        throw new Error("Function not implemented.");
+    }
+
+    const handleExport = () => {
+        
+        handleExportFile()
+    }
     
     const handleSaveButton = () => {
 
-        disptach(openSaveModal())
+        disptach(openModal(ModalType.SaveModal))
     }
 
     const handleLoadButton = () => {
 
-        disptach(openLoadModal())
+        disptach(openModal(ModalType.LoadModal))
     }
 
     const handleManageButton = () => {
 
-        disptach(openManageModal())
+        disptach(openModal(ModalType.ManageModal))
     }
     
     return (
@@ -46,11 +58,17 @@ export default function FileScrollingMenu(props: FileScrollingMenuInterface) {
 
                 <hr className={styles.separator}/>
 
-                <div className={styles.listElement}>
+                <div 
+                    className={styles.listElement}
+                    onClick={()=>handleImport()}
+                >
                     <button className={cn([styles.button])}>Import from Machine</button>
                 </div>
 
-                <div className={styles.listElement}>
+                <div 
+                    className={styles.listElement}
+                    onClick={()=>handleExport()}
+                >
                     <button className={cn([styles.button])}>Export current File</button>
                 </div>
             </div>
@@ -85,5 +103,7 @@ export default function FileScrollingMenu(props: FileScrollingMenuInterface) {
         </div>
     )
 }
+
+
 
 

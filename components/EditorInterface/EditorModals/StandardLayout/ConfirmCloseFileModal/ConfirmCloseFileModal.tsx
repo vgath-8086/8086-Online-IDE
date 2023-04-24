@@ -1,10 +1,11 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { ModalDegree } from "definitions/Modals"
+import { ModalDegree, ModalType } from "definitions/Modals"
+import { closeFile, deleteFile } from "features/file/fileSlice"
+import { closeModal, openModal, pushJobToPipeLine } from "features/interface/editor/editorModalsSlice"
+
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
-import { deleteFile } from "features/file/fileSlice"
-import { closeUnsavedFileModal, openSaveAsModal } from "features/interface/editor/editorModalsSlice"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
 
@@ -16,23 +17,24 @@ export default function ConfirmCloseFileModal(props: ConfirmCloseFileModalInterf
 
     const dispatch = useDispatch()
 
-    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isUnsavedFileModalOpen);
-    const fileToSave:string = useSelector((state:any) => state.fileSystem.fileToSave);
+    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.modalsOpenState)[ModalType.ConfirmCloseModal];
+    const fileToSave:string = useSelector((state:any) => state.interfaceManagement.editor.modals.fileToSave);
     
     const handleClose = () => {
 
-        dispatch(closeUnsavedFileModal(''));
+        dispatch(closeModal(ModalType.ConfirmCloseModal))
     }
 
     const handleSave = () => {
         
-        dispatch(closeUnsavedFileModal(''))
-        dispatch(openSaveAsModal())
+        dispatch(closeModal(ModalType.ConfirmCloseModal))
+        dispatch(openModal(ModalType.SaveAsModal))
+        dispatch(pushJobToPipeLine((fileToSave)=> closeFile(fileToSave)))
     }
 
     const handleDontSave = () => {
         
-        dispatch(closeUnsavedFileModal(''))
+        dispatch(closeModal(ModalType.ConfirmCloseModal))
         dispatch(deleteFile(fileToSave))
     }
 
