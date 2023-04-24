@@ -17,7 +17,7 @@ export default function ConfirmCloseFileModal(props: ConfirmCloseFileModalInterf
     const dispatch = useDispatch()
 
     const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isUnsavedFileModalOpen);
-    const fileToSave:string = useSelector((state:any) => state.fileSystem.fileToSave);
+    const fileToSave:string = useSelector((state:any) => state.interfaceManagement.editor.modals.fileToSave);
     
     const handleClose = () => {
 

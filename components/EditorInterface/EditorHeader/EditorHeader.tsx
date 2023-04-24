@@ -1,8 +1,8 @@
 import React from "react"
 import LogoBar from "./LogoBar"
+import FileMenu from "./FilesMenu"
 
 import styles from "styles/EditorInterface/EditorHeader.module.scss"
-import FileScrollingMenu from "./FileScrollingMenu"
 
 interface EditorHeaderInterface {
 
@@ -22,7 +22,7 @@ export default function EditorHeader(props: EditorHeaderInterface) {
                     </button>
                     <div className={styles.fileScrollingMenu}>
                         <div className={styles.test}>&nbsp;</div>
-                        <FileScrollingMenu/>
+                        <FileMenu/>
                     </div>
                 </div>
 

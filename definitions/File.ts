@@ -14,7 +14,7 @@ const emptyRegex:RegExp = new RegExp("^((\n|\s|\t| )*|" + defaultContent + ")$",
 
 const test__DefaultFile:SourceFile = {
     id: '0',
-    name: 'testFile.asm',   
+    name: 'TestFile.asm',   
     content: defaultContent,
     creationDate: '',
     lastSave: '',
@@ -114,6 +114,17 @@ class FileManager {
         }
     }
 
+    //Should look for a better way of downloading a file
+    static exportFile(file: SourceFile) {      
+        
+        var data = new Blob([file.content], {type: 'text/plain'});
+        var csvURL = window.URL.createObjectURL(data);
+        var tempLink = document.createElement('a');
+        tempLink.href = csvURL;
+        tempLink.setAttribute('download', file.name);
+        tempLink.click();
+    }
+ 
 }
 
 export type { SourceFile };

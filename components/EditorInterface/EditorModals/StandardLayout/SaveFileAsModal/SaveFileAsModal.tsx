@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { closeFile, updateFileName } from "features/file/fileSlice"
+import { closeFile, updateFileName, saveFile } from "features/file/fileSlice"
 import { closeSaveAsModal } from "features/interface/editor/editorModalsSlice"
-
 
 import { ModalDegree } from "definitions/Modals"
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
@@ -17,7 +16,7 @@ interface SaveFileAsModalInterface {
 export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
     const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveAsModalOpen);
-    const fileToSave = useSelector((state:any) => state.fileSystem.fileToSave);
+    const fileToSave = useSelector((state:any) => state.interfaceManagement.editor.modals.fileToSave);
 
     const [newFileName, setNewFileName] = useState<string>('');
 
@@ -34,13 +33,19 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
             dispatch(updateFileName({
 
-                newName: newFileName,
+                newName: capitalize(`${newFileName}.asm`), //Here we capitalize the first letter for aesthetic purposes only
                 index: fileToSave
             }));   
+            dispatch(saveFile(fileToSave));
 
             dispatch(closeFile(fileToSave));
             dispatch(closeSaveAsModal());
         }
+    }
+
+    function capitalize(s)
+    {
+        return s[0].toUpperCase() + s.slice(1);
     }
 
     return (
@@ -48,7 +53,7 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
             isModalOpen={isModalOpen}
             handleClosing={() => handleClose()}
 
-            headerTitle="Save Untitled File"
+            headerTitle="Save File"
             headerIcon={{src: "icons/icon_save_file.svg", alt: 'save'}}
             headerDegree={ModalDegree.Default}
 

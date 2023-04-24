@@ -12,6 +12,8 @@ interface EditorModalState {
     isSaveModalOpen: boolean;
     isManageModalOpen: boolean;
 
+    fileToSave: string,
+
     warningMessage: string;   //TODO: create a standard error popup
 }
 
@@ -25,6 +27,8 @@ const initialState:EditorModalState = {
     isLoadModalOpen: false,
     isSaveModalOpen: false,
     isManageModalOpen: false,
+
+    fileToSave: '',
 
     warningMessage: 'We cannot import the file. The file is too heavy. Please retry with a ligther file.',
 }
@@ -134,7 +138,18 @@ export const editorModalSlice = createSlice({
         //We be used for when clicking on the modal's overlay
         closeAllModals: (state) => {
 
-        }
+        },
+
+        //==========================
+        setFileToSave: (state, action: PayloadAction<string>) => {
+
+            state.fileToSave = action.payload
+        },
+
+        clearFileToSave: (state) => {
+
+            state.fileToSave = ''
+        },
     }
 })
 
@@ -145,6 +160,7 @@ export const {  openUnsavedFileModal, closeUnsavedFileModal,
                 openSaveModal, closeSaveModal,
                 openManageModal, closeManageModal,
                 openCompilationErrorModal, closeCompilationErrorModal,
+                setFileToSave, clearFileToSave,
              } = editorModalSlice.actions
 export type { EditorModalState }
 export default editorModalSlice.reducer

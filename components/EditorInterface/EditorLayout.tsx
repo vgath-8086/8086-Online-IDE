@@ -4,7 +4,7 @@ import EditorTabBar from "./EditorTabBar/EditorTabBar"
 import EditorTextArea from "./EditorArea/EditorTextArea"
 import EditorFooter from "./EditorFooter/EditorFooter"
 import EditorHeader from "./EditorHeader/EditorHeader"
-import EditorModalsLayout from "./EditorModals/EditorModalsLayout"
+import EditorModalWarper from "./EditorModals/EditorModalWarper"
 
 interface EditorLayoutInterface {
 
@@ -19,7 +19,7 @@ export default function EditorLayout(props: EditorLayoutInterface) {
             <EditorTextArea />
             <EditorFooter />
 
-            <EditorModalsLayout />
+            <EditorModalWarper />
         </div>
     )
 }
