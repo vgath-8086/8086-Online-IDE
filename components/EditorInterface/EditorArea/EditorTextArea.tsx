@@ -5,11 +5,13 @@ import CodeMirror from '@uiw/react-codemirror';
 import { StreamLanguage } from '@codemirror/language';
 import okaidia from '@uiw/codemirror-theme-okaidia';
 
+import { ModalType } from 'definitions/Modals';
+import { SourceFile } from 'definitions/File';
 import StreamParserAsm86 from 'definitions/CodeMirror/StreamParserAsm86'
 import ThemeLightBase16 from 'definitions/CodeMirror/ThemeLightBase16'
-import { SourceFile } from 'definitions/File';
+
 import { updateFileContent } from "features/file/fileSlice"
-import { setFileToSave, openSaveAsModal } from "features/interface/editor/editorModalsSlice"
+import { setFileToSave, openModal } from "features/interface/editor/editorModalsSlice"
 
 interface EditorTextAreaInterface {
 
@@ -43,7 +45,7 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
       //if (FileManager.isUntitled(currentFile)) {
 
         dispatch(setFileToSave(currentFile.id))
-        dispatch(openSaveAsModal())
+        dispatch(openModal(ModalType.SaveAsModal))
       
       //if (FileManager.isUntitled(currentFile)) {
 

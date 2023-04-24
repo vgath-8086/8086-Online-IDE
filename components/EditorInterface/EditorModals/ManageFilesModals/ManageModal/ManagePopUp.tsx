@@ -7,12 +7,13 @@ import { deleteFile } from "features/file/fileSlice"
 import useExportFile from "hoeks/useExportFile";
 
 import useGenerateListItem, { ListItemFilterBy } from "hoeks/useGenerateListItem"
-import { closeManageModal } from 'features/interface/editor/editorModalsSlice'
+import { closeModal } from 'features/interface/editor/editorModalsSlice'
 
 import FilePopUpLayout from "../FilePopUpLayout"
 import ManageItem from "./ManageItem"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
+import { ModalType } from "definitions/Modals"
 
 interface ManagePopUpInterface {
 
@@ -24,7 +25,7 @@ export default function ManagePopUp(props: ManagePopUpInterface) {
           [handleExportFile] = useExportFile(),
           [generateListItem] = useGenerateListItem(ListItemFilterBy.savedFiles)
 
-    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isManageModalOpen);
+    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.modalsOpenState)[ModalType.ManageModal];
 
     //---------------------------------------------
     //We generate the list of items
@@ -42,7 +43,7 @@ export default function ManagePopUp(props: ManagePopUpInterface) {
 
     const handleClosing = () => {
 
-        disptach(closeManageModal())
+        disptach(closeModal(ModalType.ManageModal))
     }
 
     

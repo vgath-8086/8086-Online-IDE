@@ -1,10 +1,13 @@
 import React from "react"
 import cn from 'classnames'
 import { useDispatch, useSelector } from "react-redux"
-import { closeFile, switchFile } from "features/file/fileSlice"
-import { openUnsavedFileModal, setFileToSave } from 'features/interface/editor/editorModalsSlice'
 
+
+import { ModalType } from "definitions/Modals"
 import { FileManager, SourceFile } from "definitions/File"
+
+import { closeFile, switchFile } from "features/file/fileSlice"
+import { openModal, setFileToSave } from 'features/interface/editor/editorModalsSlice'
 
 import styles from 'styles/EditorInterface/EditorTabBar.module.scss'
 
@@ -28,7 +31,7 @@ export default function EditorTabItem(props: EditorTabItemInterface) {
         if (FileManager.isUntitled(tabFile) && !FileManager.isEmpty(tabFile)) {
             
             dispatch(setFileToSave(props.id))
-            dispatch(openUnsavedFileModal())
+            dispatch(openModal(ModalType.ConfirmCloseModal))
         }
         else {
 

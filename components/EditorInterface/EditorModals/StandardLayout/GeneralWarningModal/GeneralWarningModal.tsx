@@ -1,8 +1,8 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { ModalDegree } from "definitions/Modals"
-import { closeGeneralWarningModal } from "features/interface/editor/editorModalsSlice"
+import { ModalDegree, ModalType } from "definitions/Modals"
+import { closeModal } from "features/interface/editor/editorModalsSlice"
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
@@ -15,12 +15,12 @@ export default function GeneralWarningModal(props: GeneralWarningModalInterface)
 
     const dispatch = useDispatch()
 
-    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isGeneralWarningModalOpen);
+    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.modalsOpenState)[ModalType.GeneralModal];
     const messageContent:string = useSelector((state:any) => state.interfaceManagement.editor.modals.warningMessage);
 
     const handleClose = () => {
 
-        dispatch(closeGeneralWarningModal());
+        dispatch(closeModal(ModalType.GeneralModal));
     }
 
     return (

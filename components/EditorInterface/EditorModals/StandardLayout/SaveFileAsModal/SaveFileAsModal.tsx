@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
+import { ModalDegree, ModalType } from "definitions/Modals"
 import { updateFileName, saveFile } from "features/file/fileSlice"
-import { closeSaveAsModal, shiftJobOutPipeLine } from "features/interface/editor/editorModalsSlice"
+import { closeModal, shiftJobOutPipeLine } from "features/interface/editor/editorModalsSlice"
 
-import { ModalDegree } from "definitions/Modals"
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
@@ -15,7 +15,7 @@ interface SaveFileAsModalInterface {
 
 export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
-    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveAsModalOpen);
+    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.modalsOpenState)[ModalType.SaveAsModal];
     const fileToSave = useSelector((state:any) => state.interfaceManagement.editor.modals.fileToSave);
     
     const pipeline:Function[] = useSelector((state:any) => state.interfaceManagement.editor.modals.modalPipLine);
@@ -26,7 +26,7 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
     const handleClose = () => {
 
-        dispatch(closeSaveAsModal());
+        dispatch(closeModal(ModalType.SaveAsModal));
     }
 
     const handleSave = () => {
@@ -40,7 +40,7 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
             }));   
 
             dispatch(saveFile(fileToSave));
-            dispatch(closeSaveAsModal());
+            dispatch(closeModal(ModalType.SaveAsModal));
 
             if (pipeline.length > 0) {
 

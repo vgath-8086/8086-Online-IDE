@@ -2,15 +2,18 @@ import React, { ReactNode } from "react"
 import Modal from 'react-modal'
 import { useSelector, useDispatch } from "react-redux"
 
-import { loadFile } from "features/file/fileSlice"
-import { closeLoadModal } from 'features/interface/editor/editorModalsSlice'
-
+import { ModalType } from "definitions/Modals"
 import { SourceFile } from "definitions/File"
+
+import { loadFile } from "features/file/fileSlice"
+import { closeModal } from 'features/interface/editor/editorModalsSlice'
+
+import useGenerateListItem, { ListItemFilterBy } from "hoeks/useGenerateListItem"
+
 import FilePopUpLayout from "../FilePopUpLayout"
 import LoadItem from "./LoadItem"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
-import useGenerateListItem, { ListItemFilterBy } from "hoeks/useGenerateListItem"
 
 interface LoadPopUpInterface {
 
@@ -21,7 +24,7 @@ export default function LoadPopUp(props: LoadPopUpInterface) {
     const disptach = useDispatch(),
           [generateListItem] = useGenerateListItem(ListItemFilterBy.savedFiles)
 
-    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.isLoadModalOpen)
+    const isModalOpen:boolean = useSelector((state:any) => state.interfaceManagement.editor.modals.modalsOpenState)[ModalType.LoadModal]
 
     //---------------------------------------------
     //We generate the list of items
@@ -38,13 +41,13 @@ export default function LoadPopUp(props: LoadPopUpInterface) {
 
     const handleClosing = () => {
 
-        disptach(closeLoadModal())
+        disptach(closeModal(ModalType.LoadModal))
     }
 
     const handleLoad = (fileId: string) => {
         
         disptach(loadFile(fileId))
-        disptach(closeLoadModal())
+        disptach(closeModal(ModalType.LoadModal))
     }
 
     return (

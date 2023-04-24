@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import { useSelector, useDispatch } from "react-redux"
 
 import { saveFileAs } from "features/file/fileSlice"
-import { closeSaveModal } from 'features/interface/editor/editorModalsSlice'
+import { closeModal } from 'features/interface/editor/editorModalsSlice'
 import useGenerateListItem, { ListItemFilterBy } from "hoeks/useGenerateListItem"
 
 import FilePopUpLayout from "../FilePopUpLayout"
@@ -12,6 +12,7 @@ import SaveFooter from "./SaveFooter"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
 import { SourceFile } from "definitions/File"
+import { ModalType } from "definitions/Modals"
 
 
 interface SavePopUpInterface {
@@ -23,7 +24,7 @@ export default function SavePopUp(props: SavePopUpInterface) {
     const disptach = useDispatch(),
           [ generateListItem ] = useGenerateListItem(ListItemFilterBy.savedFiles)
 
-    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveModalOpen);
+    const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.modalsOpenState)[ModalType.SaveModal];
 
     //---------------------------------------------
     //We generate the list of items
@@ -40,7 +41,7 @@ export default function SavePopUp(props: SavePopUpInterface) {
 
     const handleClosing = () => {
 
-        disptach(closeSaveModal())
+        disptach(closeModal(ModalType.SaveModal))
     }
 
     const handleSaving = (fileName: string) => {
