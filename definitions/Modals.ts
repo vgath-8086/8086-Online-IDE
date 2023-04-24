@@ -1,5 +1,4 @@
 //TMP
-
 enum ModalType {
     GeneralModal = 1,
     SaveAsModal,

@@ -35,24 +35,6 @@ export default function EditorTabBar(props: EditorTabBarInterface) {
             />    
         )
     )
-    const generateTabs:Function = (files:SourceFile[], openedFiles:string[], activeFile:string): ReactNode[] => {
-        
-        const tabsList:ReactNode[] = [];       
-        
-        for (const file of files) { 
-
-            if (openedFiles.includes( file.id )) {
-
-                const isActive:boolean = activeFile == file.id;
-
-                tabsList.push(
-                    <EditorTabItem key={file.id} id={file.id} title={file.name} active={isActive}/>
-                )
-            }
-        }
-
-        return tabsList;
-    }
 
     return (
         <div className={styles.tabBarContainer} onDoubleClick={()=>dispatch(createFile()) }>
@@ -64,6 +46,7 @@ export default function EditorTabBar(props: EditorTabBarInterface) {
             <button 
                 className={styles.addNewFileButton}
                 onClick={()=>{dispatch(createFile())}}
+                onDoubleClick={(e)=>e.stopPropagation()}
             >
                 <img src="/icons/Editor/icon_add_file.svg" alt="Add new file icon"/>
             </button>

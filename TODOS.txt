@@ -3,7 +3,7 @@ FIXES:
 ✔️->When creating a new file by writing in an empty editor, then closing this file without saving it
     write again in the empty editor generates an error
 ✔️->The order in which the tabs are loaded
-->When double-clicking on the "+" button to add a file, two files are add to the file system
+✔️->When double-clicking on the "+" button to add a file, two files are add to the file system
 
 FUNCT:
 ✔️->Add Ctrl-S support
