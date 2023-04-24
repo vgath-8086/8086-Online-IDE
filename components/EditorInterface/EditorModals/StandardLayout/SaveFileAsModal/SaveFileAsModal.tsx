@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { closeFile, updateFileName, saveFile } from "features/file/fileSlice"
-import { closeSaveAsModal } from "features/interface/editor/editorModalsSlice"
+import { updateFileName, saveFile } from "features/file/fileSlice"
+import { closeSaveAsModal, shiftJobOutPipeLine } from "features/interface/editor/editorModalsSlice"
 
 import { ModalDegree } from "definitions/Modals"
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
@@ -17,6 +17,8 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
 
     const isModalOpen = useSelector((state:any) => state.interfaceManagement.editor.modals.isSaveAsModalOpen);
     const fileToSave = useSelector((state:any) => state.interfaceManagement.editor.modals.fileToSave);
+    
+    const pipeline:Function[] = useSelector((state:any) => state.interfaceManagement.editor.modals.modalPipLine);
 
     const [newFileName, setNewFileName] = useState<string>('');
 
@@ -36,10 +38,15 @@ export default function SaveFileAsModal(props: SaveFileAsModalInterface) {
                 newName: capitalize(`${newFileName}.asm`), //Here we capitalize the first letter for aesthetic purposes only
                 index: fileToSave
             }));   
-            dispatch(saveFile(fileToSave));
 
-            dispatch(closeFile(fileToSave));
+            dispatch(saveFile(fileToSave));
             dispatch(closeSaveAsModal());
+
+            if (pipeline.length > 0) {
+
+                dispatch(pipeline[0](fileToSave));
+                dispatch(shiftJobOutPipeLine());
+            }
         }
     }
 

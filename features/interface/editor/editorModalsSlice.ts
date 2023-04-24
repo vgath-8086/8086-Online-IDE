@@ -12,9 +12,14 @@ interface EditorModalState {
     isSaveModalOpen: boolean;
     isManageModalOpen: boolean;
 
-    fileToSave: string,
+
+    fileToSave: string;
 
     warningMessage: string;   //TODO: create a standard error popup
+
+    //Test
+    modalPipLine: Function[];
+    modalsOpenState: number[];
 }
 
 const initialState:EditorModalState = {
@@ -27,6 +32,10 @@ const initialState:EditorModalState = {
     isLoadModalOpen: false,
     isSaveModalOpen: false,
     isManageModalOpen: false,
+
+    //Test
+    modalPipLine: [],
+    modalsOpenState: [0],
 
     fileToSave: '',
 
@@ -150,6 +159,16 @@ export const editorModalSlice = createSlice({
 
             state.fileToSave = ''
         },
+
+        pushJobToPipeLine: (state, action: PayloadAction<Function>) => {
+
+            state.modalPipLine.push(action.payload)
+        },
+        
+        shiftJobOutPipeLine: (state) => {
+
+            state.modalPipLine.shift()
+        },
     }
 })
 
@@ -161,6 +180,7 @@ export const {  openUnsavedFileModal, closeUnsavedFileModal,
                 openManageModal, closeManageModal,
                 openCompilationErrorModal, closeCompilationErrorModal,
                 setFileToSave, clearFileToSave,
+                pushJobToPipeLine, shiftJobOutPipeLine
              } = editorModalSlice.actions
 export type { EditorModalState }
 export default editorModalSlice.reducer

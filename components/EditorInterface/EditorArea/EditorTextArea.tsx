@@ -7,7 +7,7 @@ import okaidia from '@uiw/codemirror-theme-okaidia';
 
 import StreamParserAsm86 from 'definitions/CodeMirror/StreamParserAsm86'
 import ThemeLightBase16 from 'definitions/CodeMirror/ThemeLightBase16'
-import { FileManager, SourceFile } from 'definitions/File';
+import { SourceFile } from 'definitions/File';
 import { updateFileContent } from "features/file/fileSlice"
 import { setFileToSave, openSaveAsModal } from "features/interface/editor/editorModalsSlice"
 
@@ -29,8 +29,6 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
 
   const dispatch = useDispatch();
   
-  const defaultText = '\r\norg 0h\r\n\r\nret\r\n';
-
   const onChange = React.useCallback((value, viewUpdate) => {
     
     dispatch(updateFileContent({index: null, newContent: value}))
@@ -46,6 +44,11 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
 
         dispatch(setFileToSave(currentFile.id))
         dispatch(openSaveAsModal())
+      
+      //if (FileManager.isUntitled(currentFile)) {
+
+      //}
+
       /*}
       else  {
 

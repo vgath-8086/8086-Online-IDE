@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { ModalDegree } from "definitions/Modals"
 import EditorStandardModalLayout from "../EditorStandardModalLayout"
-import { deleteFile } from "features/file/fileSlice"
-import { closeUnsavedFileModal, openSaveAsModal } from "features/interface/editor/editorModalsSlice"
+import { closeFile, deleteFile } from "features/file/fileSlice"
+import { closeUnsavedFileModal, openSaveAsModal, pushJobToPipeLine } from "features/interface/editor/editorModalsSlice"
 
 import styles from "styles/EditorInterface/EditorModals.module.scss"
 
@@ -28,6 +28,7 @@ export default function ConfirmCloseFileModal(props: ConfirmCloseFileModalInterf
         
         dispatch(closeUnsavedFileModal(''))
         dispatch(openSaveAsModal())
+        dispatch(pushJobToPipeLine((fileToSave)=> closeFile(fileToSave)))
     }
 
     const handleDontSave = () => {
