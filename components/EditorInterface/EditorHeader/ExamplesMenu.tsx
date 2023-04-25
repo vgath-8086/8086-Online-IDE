@@ -24,15 +24,18 @@ export default function ExamplesMenu(props: ExamplesMenuInterface) {
         <div className={styles.FileMenuContainer}>
             <div className={styles.mainList}>
                 {Examples.map((example:{name: string, content:string}, idx) => (
-                    <div 
-                        key={idx}
-                        className={styles.listElement}
-                        onClick={()=>handleLoadButton(example.content)}
-                    >
-                        <button className={cn([styles.button])}>
-                            {example.name}
-                        </button>
-                    </div>
+                    <>
+                        <div 
+                            key={idx}
+                            className={styles.listElement}
+                            onClick={()=>handleLoadButton(example.content)}
+                        >
+                            <button className={cn([styles.button])}>
+                                {example.name}
+                            </button>
+                        </div>
+                        {/*<hr className={styles.separator}/>*/}
+                    </>
                 ))}
             </div>
 

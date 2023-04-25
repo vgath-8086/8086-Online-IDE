@@ -64,20 +64,24 @@ endm                 \n\
     {
         name: 'Procedures definition',
         content: '\
-        call addition        \n\
-        proc addition        \n\
-        ;Update the def      \n\
-        \t  mov ax, a        \n\
-        \t  add bx, b        \n\
-        \t  add ax, bx       \n\
-        endm                 \n\
+call addition        \n\
+ret                  \n\
+\n\
+;---------------------------------------    \n\
+\n\
+proc addition        \n\
+;Update the def      \n\
+\t  mov ax, a        \n\
+\t  add bx, b        \n\
+\t  add ax, bx       \n\
+endm                 \n\
         '
     },
 
     {
         name: 'Variable management',
         content: '\
-        tab db 10, DUP(0), 5 \n\
+tab db 10, DUP(0), 5 \n\
         '
     },
 ];
