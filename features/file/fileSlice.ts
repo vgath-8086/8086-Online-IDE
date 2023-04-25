@@ -50,7 +50,9 @@ export const fileSlice = createSlice({
         },
 
         //Create a new file when clicking on the "plus" button
-        createFile: (state) => {
+        createFile: (state, action?: PayloadAction<string|null>) => {
+            const content: string = action.payload;
+            
             const fileName:string = FileManager.generateUntitledName(state.files),
                   currentDate:string = new Date().toDateString(),
                   fileUuid:string = uuidv4();
@@ -58,7 +60,7 @@ export const fileSlice = createSlice({
             let createdFile:SourceFile = {
                 id: fileUuid,
                 name: fileName,   //TODO: change the default naming: untitled-0, untitled-1
-                content: defaultContent,
+                content: (content == null) ? defaultContent: content,
                 creationDate: currentDate,
                 lastSave: currentDate,
             };

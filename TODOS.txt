@@ -4,6 +4,7 @@ FIXES:
     write again in the empty editor generates an error
 ✔️->The order in which the tabs are loaded
 ✔️->When double-clicking on the "+" button to add a file, two files are add to the file system
+-> When hover the header menu, the length of the page increases
 
 FUNCT:
 ✔️->Add Ctrl-S support

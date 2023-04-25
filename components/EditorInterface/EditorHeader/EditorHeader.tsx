@@ -1,6 +1,7 @@
 import React from "react"
 import LogoBar from "./LogoBar"
 import FileMenu from "./FilesMenu"
+import ExamplesMenu from "./ExamplesMenu"
 
 import styles from "styles/EditorInterface/EditorHeader.module.scss"
 
@@ -37,10 +38,16 @@ export default function EditorHeader(props: EditorHeaderInterface) {
                     <span className={styles.navButtonName}>ASM-Reference</span>
                 </button>
 
-                <button className={styles.navExampleButton}>
-                    <img className={styles.navIcon} src="icons/header/icon_examples_down_arrow.svg" alt="examples down arrow" />
-                    <span className={styles.navExampleButtonName}>Examples</span>
-                </button>
+                <div className={styles.navButtonContainer}>
+                    <button className={styles.navExampleButton}>
+                        <img className={styles.navIcon} src="icons/header/icon_examples_down_arrow.svg" alt="examples down arrow" />
+                        <span className={styles.navExampleButtonName}>Examples</span>
+                    </button>
+                    <div className={styles.examplesScrollingMenu}>
+                        <div className={styles.test}>&nbsp;</div>
+                        <ExamplesMenu/>
+                    </div>
+                </div>
 
                 <button className={styles.compileButton}>
                     <img className={styles.navIcon} src="icons/header/icon_compile.svg" alt="icon compile button" />
