@@ -1,12 +1,14 @@
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux"
 import cn from "classnames"
 
+import useExportFile from "hoeks/useExportFile"
+import { ModalType } from "definitions/Modals"
 import { openModal } from 'features/interface/editor/editorModalsSlice'
+import { uploadFile } from "features/file/fileSlice"
 
 import styles from "styles/EditorInterface/EditorScrollingMenus.module.scss"
-import useExportFile from "hoeks/useExportFile";
-import { ModalType } from "definitions/Modals";
+
 
 interface FileMenuInterface {
 
@@ -19,9 +21,19 @@ export default function FileMenu(props: FileMenuInterface) {
 
     const disptach = useDispatch();
    
-    const handleImport = () => {
+    const handleImport = (e) => {
 
-        throw new Error("Function not implemented.");
+        e.preventDefault()
+        const reader = new FileReader(),
+              filename = e.target.files[0].name
+
+        reader.onload = async (e) => { 
+          const fileContent:string = e.target.result as string
+        
+          disptach(uploadFile({name: filename, content: fileContent}))
+        };
+        
+        reader.readAsText(e.target.files[0])
     }
 
     const handleExport = () => {
@@ -60,9 +72,13 @@ export default function FileMenu(props: FileMenuInterface) {
 
                 <div 
                     className={styles.listElement}
-                    onClick={()=>handleImport()}
                 >
-                    <button className={cn([styles.button])}>Import from Machine</button>
+                    <button className={cn([styles.button])}>
+                        <label htmlFor="uploadFile">
+                        Import from Machine
+                        </label>
+                    </button>
+                    <input id="uploadFile" type="file" onChange={(e) => handleImport(e)} style={{display: "none"}} />
                 </div>
 
                 <div 

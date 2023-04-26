@@ -18,8 +18,9 @@ FUNCT:
 ->Implement closeAllModals for when clicking on a modal overlay
 ✔️->Double click on TabBar to open new tab
 ->Add a small animation in the footer when a new info is displayed
-->Add a message on the Save/Load/Manage popups when no file are found
+✔️->Add a message on the Save/Load/Manage popups when no file are found
 ->Make tab draggable
+->DragNDrop to import files
 
 DESÑ:
 ->Should redesign the close popup button
