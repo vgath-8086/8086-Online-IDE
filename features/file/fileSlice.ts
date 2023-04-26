@@ -50,7 +50,9 @@ export const fileSlice = createSlice({
         },
 
         //Create a new file when clicking on the "plus" button
-        createFile: (state) => {
+        createFile: (state, action?: PayloadAction<string|null>) => {
+            const content: string = action.payload
+            
             const fileName:string = FileManager.generateUntitledName(state.files),
                   currentDate:string = new Date().toDateString(),
                   fileUuid:string = uuidv4();
@@ -58,17 +60,35 @@ export const fileSlice = createSlice({
             let createdFile:SourceFile = {
                 id: fileUuid,
                 name: fileName,   //TODO: change the default naming: untitled-0, untitled-1
-                content: defaultContent,
+                content: (content == null) ? defaultContent: content,
                 creationDate: currentDate,
                 lastSave: currentDate,
             };
 
             state.files.push(createdFile);
             state.openedFiles.push(fileUuid);
-            state.activeFile = fileUuid;
+            state.activeFile = fileUuid;            
+        },
 
-            console.log(state.files);
+        uploadFile: (state, action: PayloadAction<{content:string, name:string}>) => {
+            const fileName: string = action.payload.name,
+                  content: string = action.payload.content
             
+            const currentDate:string = new Date().toDateString(),
+                  fileUuid:string = uuidv4();
+            
+            let createdFile:SourceFile = {
+                id: fileUuid,
+                name: fileName,   //TODO: change the default naming: untitled-0, untitled-1
+                content: content,
+                creationDate: currentDate,
+                lastSave: currentDate,
+            };
+
+            state.files.push(createdFile);
+            state.openedFiles.push(fileUuid);
+            state.savedFiles.push(fileUuid);
+            state.activeFile = fileUuid;
         },
 
         //Switch to a new file when clicking on a TabBarElement
@@ -245,7 +265,7 @@ export const fileSlice = createSlice({
     }
 })
 
-export const { createFile , loadFile, switchFile, updateFileContent, updateFileName,
+export const { createFile, uploadFile, loadFile, switchFile, updateFileContent, updateFileName,
 saveFile, saveFileAs, closeFile, deleteFile} = fileSlice.actions
 
 export type { FilesState }

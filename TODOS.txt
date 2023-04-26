@@ -4,6 +4,7 @@ FIXES:
     write again in the empty editor generates an error
 ✔️->The order in which the tabs are loaded
 ✔️->When double-clicking on the "+" button to add a file, two files are add to the file system
+-> When hover the header menu, the length of the page increases
 
 FUNCT:
 ✔️->Add Ctrl-S support
@@ -17,8 +18,9 @@ FUNCT:
 ->Implement closeAllModals for when clicking on a modal overlay
 ✔️->Double click on TabBar to open new tab
 ->Add a small animation in the footer when a new info is displayed
-->Add a message on the Save/Load/Manage popups when no file are found
+✔️->Add a message on the Save/Load/Manage popups when no file are found
 ->Make tab draggable
+->DragNDrop to import files
 
 DESÑ:
 ->Should redesign the close popup button

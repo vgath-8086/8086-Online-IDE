@@ -83,11 +83,10 @@ $header-shadow: 0 4px 12px 0 #D9D5ED;
         }
     }
 
-    .fileScrollingMenu {
+    .fileScrollingMenu, .examplesScrollingMenu {
         display: none;
         position: absolute;
         width: 100%;
-
     }
 
     .test {
@@ -119,6 +118,10 @@ $header-shadow: 0 4px 12px 0 #D9D5ED;
             color: $active-color;
             font-weight: bold;
         }
+    }
+
+    .navButtonContainer:hover > .examplesScrollingMenu {
+        display: block;
     }
 
     .compileButton {
