@@ -42,7 +42,8 @@ export const editorModalSlice = createSlice({
         //==========================
         //We be used for when clicking on the modal's overlay
         closeAllModals: (state) => {
-
+            //When closing all the modals, dont forget to flush the modalPipeline, 
+            //, reset fileToSave, ...etc, aka reset to the initialState
         },
 
         //==========================
