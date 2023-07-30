@@ -5,71 +5,14 @@ import CodeMirror from '@uiw/react-codemirror';
 import { StreamLanguage } from '@codemirror/language';
 import okaidia from '@uiw/codemirror-theme-okaidia';
 
-import { ModalType } from 'definitions/Modals';
-import { SourceFile } from 'definitions/File';
+import { ModalType } from 'definitions/Modals'
+import { SourceFile } from 'definitions/File'
 import StreamParserAsm86 from 'definitions/CodeMirror/StreamParserAsm86'
 import ThemeLightBase16 from 'definitions/CodeMirror/ThemeLightBase16'
+import { breakpointGutter } from 'definitions/CodeMirror/BreakPoints'
 
 import { updateFileContent } from "features/file/fileSlice"
 import { setFileToSave, openModal } from "features/interface/editor/editorModalsSlice"
-
-import {EditorView, gutter, GutterMarker} from "@codemirror/view"
-import {StateField, StateEffect, RangeSet} from "@codemirror/state"
-
-
-const breakpointMarker = new class extends GutterMarker {
-  toDOM() { return document.createTextNode("💔") }
-}
-
-const breakpointEffect = StateEffect.define<{pos: number, on: boolean}>({
-  map: (val, mapping) => ({pos: mapping.mapPos(val.pos), on: val.on})
-})
-
-const breakpointState = StateField.define<RangeSet<GutterMarker>>({
-  create() { return RangeSet.empty },
-  update(set, transaction) {
-    set = set.map(transaction.changes)
-    for (let e of transaction.effects) {
-      if (e.is(breakpointEffect)) {
-        if (e.value.on)
-          set = set.update({add: [breakpointMarker.range(e.value.pos)]})
-        else
-          set = set.update({filter: from => from != e.value.pos})
-      }
-    }
-    return set
-  }
-})
-
-function toggleBreakpoint(view: EditorView, pos: number) {
-  let breakpoints = view.state.field(breakpointState)
-  let hasBreakpoint = false
-  breakpoints.between(pos, pos, () => {hasBreakpoint = true})
-  view.dispatch({
-    effects: breakpointEffect.of({pos, on: !hasBreakpoint})
-  })
-}
-const breakpointGutter = [
-  breakpointState,
-  gutter({
-    class: "cm-breakpoint-gutter",
-    markers: v => v.state.field(breakpointState),
-    initialSpacer: () => breakpointMarker,
-    domEventHandlers: {
-      mousedown(view, line) {
-        toggleBreakpoint(view, line.from)
-        return true
-      }
-    }
-  }),
-  EditorView.baseTheme({
-    ".cm-breakpoint-gutter .cm-gutterElement": {
-      color: "red",
-      paddingLeft: "2px",
-      cursor: "default"
-    }
-  })
-]
 
 
 interface EditorTextAreaInterface {
@@ -80,15 +23,14 @@ const asmLang = StreamLanguage.define(StreamParserAsm86);
 
 export default function EditorTextArea(props: EditorTextAreaInterface) {
 
+  const dispatch = useDispatch()
+
   const files:SourceFile[] = useSelector((state:any) => state.fileSystem.files),
-        activeFile:string = useSelector((state:any) => state.fileSystem.activeFile);
-  
-  const currentFile:SourceFile = files.find(file => file.id == activeFile);
+        activeFile:string = useSelector((state:any) => state.fileSystem.activeFile)
+  const currentFile:SourceFile = files.find(file => file.id == activeFile)
   
   //If no activeFile was found, we display an empty editor
-  let initContent:string = currentFile ? currentFile.content : '';
-
-  const dispatch = useDispatch();
+  let initContent:string = currentFile ? currentFile.content : ''
   
   const onChange = React.useCallback((value, viewUpdate) => {
     
@@ -123,7 +65,7 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
       <CodeMirror
         value={initContent}
         theme={ThemeLightBase16}
-        extensions={[asmLang]}
+        extensions={[asmLang, breakpointGutter]}
         height={"100%"}
         onChange={onChange}
 		    onKeyDown={onKeyDown}

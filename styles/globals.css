@@ -60,6 +60,10 @@ a {
   min-width: 100px;
 }
 
+.cm-breakpoint-guttertext-transparent {
+  opacity: 0.5;
+}
+
 .cm-scroller {
   position: absolute !important;
   top: 0;
