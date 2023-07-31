@@ -49,43 +49,56 @@ const breakpointState = StateField.define<GutterState>({
         
         state.breakpointsPos.forEach((pos) => {
           //Here we concider that fromB is always equal to fromA
-          //if (pos >= fromA) 
-          //{
+          console.log("==>", fromA, toA);
+          console.log("==>", fromB, toB);
+          console.log(state.breakpointsPos);
+
+          if (pos >= fromA) 
+          {
             state.breakpointsPos.delete(pos)
 
             if (diffTo > 0) 
             {
-              if (toB >= pos) 
-              {
+              //if (toB >= pos) 
+              //{
                 posToAdd.add(pos+diffTo)
+              /*  console.log("????");
+                
               }
               else if (toB < pos) 
               {
                 //We dont have to change its value
                 posToAdd.add(pos)
-              }
+                console.log("<<<< ????");
+              }*/
             }
             else if (diffTo < 0) 
             {
-              if (toB >= pos) 
-              {
-                posToAdd.add(pos+diffTo)
-              }
+              //if (toB >= pos) 
+              //{
+                if (fromA <= pos && pos <= toA) {
+                  console.log("=========")
+                  posToAdd.add(fromA)
+                }
+                else {
+                  posToAdd.add(pos+diffTo)
+                }
+              /*}
               else if (toB < pos) 
               {
                 posToAdd.add(toB-1)
-              }
+              }*/
             }
-          //}
+          }
         })
-        console.log(posToAdd);
+        console.log("toAdd : ", posToAdd);
         
         posToAdd.forEach((pos) => {
           state.breakpointsPos.add(pos)
         })
 
         state.temporaryGuttersPos = null
-      });
+      }, true);
       
 
       for (let e of transaction.effects) {
