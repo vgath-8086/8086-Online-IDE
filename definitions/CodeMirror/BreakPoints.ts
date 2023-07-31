@@ -10,7 +10,13 @@ interface GutterState {
 }
 
 const breakpointMarker = new class extends GutterMarker {
-    toDOM() { return document.createTextNode("●") }
+  toDOM() { 
+    let marker = document.createElement("span") 
+    marker.textContent = "●"
+    marker.className = "cm-breakpoint-guttertext-permanent"
+
+    return marker
+  }
 }
 
 const breakpointTransparentMarker = new class extends GutterMarker {
@@ -37,19 +43,61 @@ const breakpointState = StateField.define<GutterState>({
     },
     update(state, transaction) {
       state.set = state.set.map(transaction.changes)
+      transaction.changes.iterChanges((fromA, toA, fromB, toB)=>{
+        let posToAdd = new Set<number>(),
+            diffTo = toB - toA
+        
+        state.breakpointsPos.forEach((pos) => {
+          //Here we concider that fromB is always equal to fromA
+          //if (pos >= fromA) 
+          //{
+            state.breakpointsPos.delete(pos)
+
+            if (diffTo > 0) 
+            {
+              if (toB >= pos) 
+              {
+                posToAdd.add(pos+diffTo)
+              }
+              else if (toB < pos) 
+              {
+                //We dont have to change its value
+                posToAdd.add(pos)
+              }
+            }
+            else if (diffTo < 0) 
+            {
+              if (toB >= pos) 
+              {
+                posToAdd.add(pos+diffTo)
+              }
+              else if (toB < pos) 
+              {
+                posToAdd.add(toB-1)
+              }
+            }
+          //}
+        })
+        console.log(posToAdd);
+        
+        posToAdd.forEach((pos) => {
+          state.breakpointsPos.add(pos)
+        })
+
+        state.temporaryGuttersPos = null
+      });
+      
+
       for (let e of transaction.effects) {
         if (e.is(breakpointEffect)) { 
-          console.log(e.value.on);
+          state.set.between(0, state.set.size, (v)=>{console.log(v)});
 
-          if (e.value.on) {
-            console.log("add");
-            
+          if (e.value.on) {            
             state.breakpointsPos.add(e.value.pos)
             state.set = state.set.update({filter: from => from != e.value.pos})
             state.set = state.set.update({add: [breakpointMarker.range(e.value.pos)]})
           }
           else {
-            console.log("delete");
             state.breakpointsPos.delete(e.value.pos)
             state.set = state.set.update({filter: from => from != e.value.pos})
           }
@@ -65,9 +113,6 @@ const breakpointState = StateField.define<GutterState>({
           }
           
           state.set = state.set.update({filter: (fpos) => {          
-            //console.log(fpos);
-            //console.log((fpos == state.temporaryGuttersPos));
-            //console.log(!state.breakpointsPos.has(fpos));
             
             return ((fpos == state.temporaryGuttersPos) || state.breakpointsPos.has(fpos))
           }});
@@ -122,6 +167,9 @@ const breakpointGutter = [
           toggleBreakpoint(view, line.from, false, false)
           return true     
         },
+        keydown(view, line) {          
+          return true
+        }
       }
     }),
     EditorView.baseTheme({
