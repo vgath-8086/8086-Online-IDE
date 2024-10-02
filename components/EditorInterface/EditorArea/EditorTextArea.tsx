@@ -10,10 +10,10 @@ import { SourceFile } from 'definitions/File'
 import StreamParserAsm86 from 'definitions/CodeMirror/StreamParserAsm86'
 import ThemeLightBase16 from 'definitions/CodeMirror/ThemeLightBase16'
 import { breakpointGutter } from 'definitions/CodeMirror/BreakPoints'
+import { selectionHighlight } from 'definitions/CodeMirror/SelectionHighlight'
 
 import { updateFileContent } from "features/file/fileSlice"
 import { setFileToSave, openModal } from "features/interface/editor/editorModalsSlice"
-
 
 interface EditorTextAreaInterface {
 
@@ -42,7 +42,7 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
       // Prevent the Save dialog to open
       e.preventDefault();
       
-      //TODO: implement a correct save solution once the "saving system" is completed
+      //TODO: implement a correct saving solution once the "saving system" is completed
       //if (FileManager.isUntitled(currentFile)) {
 
         dispatch(setFileToSave(currentFile.id))
@@ -65,7 +65,8 @@ export default function EditorTextArea(props: EditorTextAreaInterface) {
       <CodeMirror
         value={initContent}
         theme={ThemeLightBase16}
-        extensions={[asmLang, breakpointGutter]}
+        placeholder={"Start typing here or load a file from your machine..."}
+        extensions={[asmLang, breakpointGutter, selectionHighlight]}
         height={"100%"}
         onChange={onChange}
 		    onKeyDown={onKeyDown}

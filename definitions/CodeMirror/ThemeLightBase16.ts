@@ -8,7 +8,7 @@ const ThemeLightBase16 = createTheme({
       foreground: '#202020',
       caret: '#5d00ff',
       selection: '#e0e0e0',
-      selectionMatch: '#e0e0e0',
+      //selectionMatch: '#e0e0e0', 
       lineHighlight: '#8a91991a',
       gutterBackground: '#fff',
       gutterForeground: '#8a919966',
