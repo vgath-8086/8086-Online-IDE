@@ -1,6 +1,7 @@
 import {EditorView, gutter, GutterMarker} from "@codemirror/view"
 import {StateField, StateEffect, RangeSet} from "@codemirror/state"
 
+// This file is a bit of a draft, it should be reviewed and refractored
 //ref: https://jasonlaster.github.io/devtools/js/2017/02/21/react+codemirror.html
 
 interface GutterState {
@@ -41,61 +42,50 @@ const breakpointState = StateField.define<GutterState>({
         breakpointsPos: new Set<number>()
       } 
     },
+
+    // We should add a property so that the breakpoint moves when 
     update(state, transaction) {
       state.set = state.set.map(transaction.changes)
-      transaction.changes.iterChanges((fromA, toA, fromB, toB)=>{
+      transaction.changes.iterChanges((fromA, toA, fromB, toB)=>{    
+        // fromA/toA: the change in the starting document
+        // fromB/toB: the replacement in the changed document.
+
         let posToAdd = new Set<number>(),
+            posToDel = new Set<number>(),
             diffTo = toB - toA
-        
+
         state.breakpointsPos.forEach((pos) => {
-          //Here we concider that fromB is always equal to fromA
+          //Here we consider that fromB is always equal to fromA
           console.log("==>", fromA, toA);
           console.log("==>", fromB, toB);
           console.log(state.breakpointsPos);
+          
+          // If the breakpoint was inside a removed block, we delete it
+          if (pos > fromA && pos <= toA ){
+            //console.log("del:",pos);
+            
+            posToDel.add(pos)
+          }
+          else if (pos > toA) {
+            //console.log("add:",pos);
 
-          if (pos >= fromA) 
-          {
-            state.breakpointsPos.delete(pos)
-
-            if (diffTo > 0) 
-            {
-              //if (toB >= pos) 
-              //{
-                posToAdd.add(pos+diffTo)
-              /*  console.log("????");
-                
-              }
-              else if (toB < pos) 
-              {
-                //We dont have to change its value
-                posToAdd.add(pos)
-                console.log("<<<< ????");
-              }*/
-            }
-            else if (diffTo < 0) 
-            {
-              //if (toB >= pos) 
-              //{
-                if (fromA <= pos && pos <= toA) {
-                  console.log("=========")
-                  posToAdd.add(fromA)
-                }
-                else {
-                  posToAdd.add(pos+diffTo)
-                }
-              /*}
-              else if (toB < pos) 
-              {
-                posToAdd.add(toB-1)
-              }*/
-            }
+            posToDel.add(pos)
+            posToAdd.add(pos+diffTo)
           }
         })
         console.log("toAdd : ", posToAdd);
+        console.log("toDel : ", posToDel);
         
+        // We have to delete before adding
+        posToDel.forEach((pos) => {
+          state.breakpointsPos.delete(pos)
+        })
+
         posToAdd.forEach((pos) => {
           state.breakpointsPos.add(pos)
         })
+
+        console.log("Final : ", state.breakpointsPos);
 
         state.temporaryGuttersPos = null
       }, true);
